@@ -1,6 +1,5 @@
 package com.autolocations.auto_location;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,9 +21,11 @@ public class R_Controller {
 	@RequestMapping(path = "/api/testdata", method = RequestMethod.GET)
 	public Location[] grabdata() {
 		Gson gson = new Gson();
-		
-//		File file = new File(getClass().getClassLoader().getResource("test_data.json").getFile());
-//		InputStream in = getClass().getClassLoader().getResourceAsStream("test_data.json");
+
+		// File file = new
+		// File(getClass().getClassLoader().getResource("test_data.json").getFile());
+		// InputStream in =
+		// getClass().getClassLoader().getResourceAsStream("test_data.json");
 		JsonReader reader;
 		try {
 			reader = new JsonReader(new FileReader("test_data.json"));
