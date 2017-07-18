@@ -17,7 +17,7 @@ public class Location {
 	}
 
 	public Location() {
-	}
+	} 
 
 	private int id;
 
