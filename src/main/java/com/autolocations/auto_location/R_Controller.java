@@ -17,7 +17,6 @@ public class R_Controller {
 	public Location[] grabdata() {
 		JsonReader reader;
 		try {
-			SparkSession_instance ss = new SparkSession_instance();
 			reader = new JsonReader(new FileReader("test_data.json"));
 			Location[] data = new Gson().fromJson(reader, Location[].class);
 			return data;
