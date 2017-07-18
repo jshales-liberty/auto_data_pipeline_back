@@ -7,7 +7,7 @@ public class Location {
 	private float lati;
 	@SerializedName("long")
 	private float longi;
-	private String status;
+	private int status;
 	private int timestamp;
 
 	@Override
@@ -45,11 +45,11 @@ public class Location {
 		this.longi = longi;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
