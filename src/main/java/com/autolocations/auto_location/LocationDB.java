@@ -54,7 +54,7 @@ public class LocationDB {
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(
 				"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
-						+ "from vehlocation t1 where vid=? ORDER BY timestamp ASC;");
+						+ "from vehlocation t1 where vid=? and timestamp < extract(epoch from now()) ORDER BY timestamp ASC;");
 		pstmt.setLong(1, id);
 		ResultSet rs = pstmt.executeQuery();
 		List<Location> locations = new ArrayList<Location>();
