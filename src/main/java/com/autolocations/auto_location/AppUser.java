@@ -43,18 +43,18 @@ public class AppUser {
 		this.username = username;
 	}
 	
-	public void hashPassword() {
-		final String SALT = "ELIZABETHDAVID";
-		this.hashedPassword = this.password + SALT;
-		MessageDigest md = null;
-		try {
-			md = MessageDigest.getInstance("SHA");
-		} catch (NoSuchAlgorithmException ex) {
-			System.out.println(ex);
-		}
-		md.update(this.password.getBytes());
-		String digest = new String(md.digest());
-		this.hashedPassword=digest;
-	}
+//	public void hashPassword() {
+//		final String SALT = "ELIZABETHDAVID";
+//		this.hashedPassword = this.password + SALT;
+//		MessageDigest md = null;
+//		try {
+//			md = MessageDigest.getInstance("SHA");
+//		} catch (NoSuchAlgorithmException ex) {
+//			System.out.println(ex);
+//		}
+//		md.update(this.password.getBytes());
+//		String digest = new String(md.digest());
+//		this.hashedPassword=digest;
+//	}
   
 }
