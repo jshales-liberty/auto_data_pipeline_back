@@ -48,4 +48,28 @@ public class LocationDB {
 		return locations;
 
 	}
+	
+	public static List<Location> getHistoricalDataByVID(int id)
+			throws URISyntaxException, SQLException {
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(
+				"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
+						+ "from vehlocation t1 where vid=? ORDER BY timestamp ASC;");
+		pstmt.setLong(1, id);
+		ResultSet rs = pstmt.executeQuery();
+		List<Location> locations = new ArrayList<Location>();
+		while (rs.next()) {
+			Location location = new Location();
+			location.setId(rs.getInt("vid"));
+			location.setLati(rs.getFloat("lati"));
+			location.setLongi(rs.getFloat("longi"));
+			location.setStatus(rs.getInt("status"));
+			location.setTimestamp(rs.getInt("timestamp"));
+			locations.add(location);
+		}
+		return locations;
+
+	}
+
+	
 }
