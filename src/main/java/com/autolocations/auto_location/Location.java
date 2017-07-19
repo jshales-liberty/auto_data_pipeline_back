@@ -3,11 +3,11 @@ package com.autolocations.auto_location;
 import com.google.gson.annotations.SerializedName;
 
 public class Location {
-	@SerializedName("lat")
+	//@SerializedName("lat")
 	private float lati;
-	@SerializedName("long")
+	//@SerializedName("long")
 	private float longi;
-	private String status;
+	private int status;
 	private int timestamp;
 
 	@Override
@@ -17,7 +17,7 @@ public class Location {
 	}
 
 	public Location() {
-	}
+	} 
 
 	private int id;
 
@@ -45,11 +45,11 @@ public class Location {
 		this.longi = longi;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
