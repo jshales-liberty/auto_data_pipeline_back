@@ -27,7 +27,7 @@ public class R_Controller {
 			return null;
 		}}
 	@RequestMapping(path = "/api/testdata2", method = RequestMethod.GET)
-	public boolean grabtest() throws URISyntaxException, SQLException {
+	public int grabtest() throws URISyntaxException, SQLException {
 		return LocationJDBCTemplate.testpull();
 
 	}

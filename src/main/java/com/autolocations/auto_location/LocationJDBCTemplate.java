@@ -16,20 +16,17 @@ public class LocationJDBCTemplate {
 		return DriverManager.getConnection(dbUrl);
 	}
 
-	public static boolean testpull() throws URISyntaxException, SQLException {
+	public static int testpull() throws URISyntaxException, SQLException {
 		Connection conn = getConnection();
 		PreparedStatement pstmt_validate = conn
-				.prepareStatement("Select count(*) from cars");
+				.prepareStatement("Select count(*) from vehlocation");
 		// pstmt_validate.setString(1, u.getUsername());
 		// pstmt_validate.setString(2, u.getEmail());
 		ResultSet rs = pstmt_validate.executeQuery();
-		if (rs.getInt("count") < 1) {
-			return false;
-		} else {
-			return true;
+		return rs.getInt("count");
 		}
 	}
-}
+
 // public Student getStudent(Integer id) {
 // String SQL = "select * from Student where id = ?";
 // Student student = jdbcTemplateObject.queryForObject(SQL,
