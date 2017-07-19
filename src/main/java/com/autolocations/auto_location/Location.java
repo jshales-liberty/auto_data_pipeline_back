@@ -3,9 +3,9 @@ package com.autolocations.auto_location;
 import com.google.gson.annotations.SerializedName;
 
 public class Location {
-	@SerializedName("lat")
+	//@SerializedName("lat")
 	private float lati;
-	@SerializedName("long")
+	//@SerializedName("long")
 	private float longi;
 	private int status;
 	private int timestamp;
