@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,12 +26,18 @@ public class R_Controller {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return null;
-		}}
+		}
+	}
+
 	@RequestMapping(path = "/api/testdata2", method = RequestMethod.GET)
 	public int grabtest() throws URISyntaxException, SQLException {
-		return LocationJDBCTemplate.testpull();
+		return LocationDB.testpull();
 
 	}
 
-}
+	@RequestMapping(path = "/api/updatelocations", method = RequestMethod.GET)
+	public List<Location> getLocs() throws URISyntaxException, SQLException {
+		return LocationDB.getCurrentLocations();
 
+	}
+}
