@@ -1,0 +1,79 @@
+[
+ {
+   "id": 1,
+   "lati": 37.75134,
+   "longi": -122.39488,
+   "status": 0,
+   "timestamp": 1213084687
+ },
+ {
+   "id": 2,
+   "lati": 37.77851,
+   "longi": -122.39635,
+   "status": 1,
+   "timestamp": 1212507397
+ },
+ {
+   "id": 3,
+   "lati": 37.61625,
+   "longi": -122.38587,
+   "status": 0,
+   "timestamp": 1213036400
+ },
+ {
+   "id": 4,
+   "lati": 37.7638,
+   "longi": -122.39769,
+   "status": 0,
+   "timestamp": 1213088836
+ },
+ {
+   "id": 5,
+   "lati": 37.76943,
+   "longi": -122.42457,
+   "status": 0,
+   "timestamp": 1213037526
+ },
+ {
+   "id": 6,
+   "lati": 37.78127,
+   "longi": -122.39581,
+   "status": 1,
+   "timestamp": 1213037376
+ },
+ {
+   "id": 7,
+   "lati": 37.80246,
+   "longi": -122.40186,
+   "status": 0,
+   "timestamp": 1213034473
+ },
+ {
+   "id": 8,
+   "lati": 37.7514,
+   "longi": -122.39529,
+   "status": 0,
+   "timestamp": 1213085321
+ },
+ {
+   "id": 9,
+   "lati": 37.78506,
+   "longi": -122.40026,
+   "status": 0,
+   "timestamp": 1213034631
+ },
+ {
+   "id": 10,
+   "lati": 37.79163,
+   "longi": -122.3923,
+   "status": 1,
+   "timestamp": 1213036785
+ },
+ {
+   "id": 11,
+   "lati": 37.79837,
+   "longi": -122.40248,
+   "status": 1,
+   "timestamp": 1213035303
+ }
+]
