@@ -74,7 +74,7 @@ public class LocationDB {
 
 	}
 
-	public static int addveh() throws URISyntaxException, SQLException {
+	public static int addvehicle() throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt_1 = conn.prepareStatement(
 						"Select vid from Cars t1 where timestamp > extract(epoch from now()) Order by timestamp ASC limit 1;");

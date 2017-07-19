@@ -53,9 +53,9 @@ public class R_Controller {
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/addcar", method = RequestMethod.GET)
-	public List<Location> addrandcarr(
+	public int addrandcarr(
 			@PathVariable(name = "id", required = true) int id)
 			throws URISyntaxException, SQLException {
-		return LocationDB.getHistoricalDataByVID(id);
+		return LocationDB.addvehicle();
 	}
 }
