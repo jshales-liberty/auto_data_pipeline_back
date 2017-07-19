@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +16,7 @@ import com.google.gson.stream.JsonReader;
 
 @RestController
 public class R_Controller {
-
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/testdata", method = RequestMethod.GET)
 	public Location[] grabdata() {
 		JsonReader reader;
@@ -28,13 +29,13 @@ public class R_Controller {
 			return null;
 		}
 	}
-
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/testdata2", method = RequestMethod.GET)
 	public int grabtest() throws URISyntaxException, SQLException {
 		return LocationDB.testpull();
 
 	}
-
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/updatelocations", method = RequestMethod.GET)
 	public List<Location> getLocs() throws URISyntaxException, SQLException {
 		return LocationDB.getCurrentLocations();
