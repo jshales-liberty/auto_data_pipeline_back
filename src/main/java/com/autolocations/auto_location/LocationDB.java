@@ -33,8 +33,8 @@ public class LocationDB {
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(
 				"Select t1.Lati, t1.Longi, t1.Status, t2.vid, t2.timestamp "
-						+ "from public.'vehlocation' t1 INNER JOIN (Select vid, max(timestamp) as timestamp "
-						+ "from public.'vehlocation' where timestamp < extract(epoch from now()) group by vid) t2 "
+						+ "from vehlocation t1 INNER JOIN (Select vid, max(timestamp) as timestamp "
+						+ "from vehlocation where timestamp < extract(epoch from now()) group by vid) t2 "
 						+ "ON t1.vid=t2.vid and t1.timestamp=t2.timestamp;");
 		ResultSet rs = pstmt.executeQuery();
 		List<Location> locations = new ArrayList<Location>();
