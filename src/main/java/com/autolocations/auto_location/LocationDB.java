@@ -77,10 +77,10 @@ public class LocationDB {
 	public static int addvehicle() throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt_1 = conn.prepareStatement(
-						"Select vid from Cars t1 where timestamp > extract(epoch from now()) Order by timestamp ASC limit 1;");
+						"Select vid from Car t1 where timestamp > extract(epoch from now()) Order by timestamp ASC limit 1;");
 				PreparedStatement pstmt_2 = conn.prepareStatement(
-						"Insert into vehlocation from Cars where vid = ? & timestamp > extract(epoch from now();"
-								+ "Delete From Cars where vid = ?;"))
+						"Insert into vehlocation from Car where vid = ? & timestamp > extract(epoch from now();"
+								+ "Delete From Car where vid = ?;"))
 
 		{
 			ResultSet rs = pstmt_1.executeQuery();
