@@ -30,21 +30,32 @@ public class R_Controller {
 			return null;
 		}
 	}
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/testdata2", method = RequestMethod.GET)
 	public int grabtest() throws URISyntaxException, SQLException {
 		return LocationDB.testpull();
-
 	}
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/updatelocations", method = RequestMethod.GET)
 	public List<Location> getLocs() throws URISyntaxException, SQLException {
 		return LocationDB.getCurrentLocations();
 	}
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/routehistory/{id}", method = RequestMethod.GET)
-	public List<Location> getHistLocs(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
+	public List<Location> getHistLocs(
+			@PathVariable(name = "id", required = true) int id)
+			throws URISyntaxException, SQLException {
 		return LocationDB.getHistoricalDataByVID(id);
+	}
 
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(path = "/api/addcar", method = RequestMethod.GET)
+	public List<Location> addrandcarr(
+			@PathVariable(name = "id", required = true) int id)
+			throws URISyntaxException, SQLException {
+		return LocationDB.getHistoricalDataByVID(id);
 	}
 }
