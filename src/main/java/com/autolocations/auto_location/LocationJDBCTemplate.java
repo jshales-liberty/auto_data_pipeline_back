@@ -23,6 +23,7 @@ public class LocationJDBCTemplate {
 		// pstmt_validate.setString(1, u.getUsername());
 		// pstmt_validate.setString(2, u.getEmail());
 		ResultSet rs = pstmt_validate.executeQuery();
+		rs.next();
 		return rs.getInt("count");
 		}
 	}
