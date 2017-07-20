@@ -35,7 +35,7 @@ public class UserDB {
 		}
 	}
 
-	public static boolean validateUser(AppUser u) throws URISyntaxException, SQLException {
+	public static int validateUser(AppUser u) throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"select count(*) as count from public.users where email = ? and password_hash = ?;")) {
@@ -44,9 +44,9 @@ public class UserDB {
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			if (rs.getInt("count") != 1) {
-				return false;
+				return rs.getInt("count");
 			} else {
-				return true;
+				return rs.getInt("count");
 			}
 		}
 	}
