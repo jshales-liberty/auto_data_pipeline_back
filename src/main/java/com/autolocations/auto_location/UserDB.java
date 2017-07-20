@@ -20,7 +20,7 @@ public static boolean adduser(AppUser u) throws URISyntaxException, SQLException
 			PreparedStatement pstmt_1 = conn.prepareStatement(
 					"Select count(*) as count from users where email = ?;");
 			PreparedStatement pstmt_2 = conn.prepareStatement(
-					"Insert into users(email, password_hash) values (?, crypt('?', gen_salt('bf'));"))
+					"Insert into users(email, password_hash) values (?, ?);"))
 
 	{pstmt_1.setString(1, u.getEmail());
 		ResultSet rs = pstmt_1.executeQuery();
