@@ -68,7 +68,7 @@ public class R_Controller {
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/validateUser", method = RequestMethod.POST)
-	public int validateUser(AppUser u) throws URISyntaxException, SQLException {
+	public String validateUser(AppUser u) throws URISyntaxException, SQLException {
 		return UserDB.validateUser(u);
 	}
 }
