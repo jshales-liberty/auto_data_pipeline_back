@@ -9,21 +9,21 @@ import java.sql.PreparedStatement;
 
 public class AppUser {
 
-	int id;
-	String username;
-	String password_hash;
+	private int id;
+	private String email;
+	private String password_hash;
 
-	public AppUser(String username, String password_hash) {
-		this.username = username;
+	public AppUser(String email, String password_hash) {
+		this.email = email;
 		this.password_hash = password_hash;
 }
 	
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword_hash() {
