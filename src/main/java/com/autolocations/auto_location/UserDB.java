@@ -40,7 +40,8 @@ public class UserDB {
 				PreparedStatement pstmt = conn.prepareStatement(
 						"select * from users where email = ?;")) {
 //						"select * from users where email = 'herbert@ttt.com';")) {
-			pstmt.setString(1, "'" + u.getEmail() + "'");
+			pstmt.setString(1, u.getEmail());
+			System.out.println(pstmt.toString());
 //			pstmt.setString(2, u.getPassword_hash());
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
