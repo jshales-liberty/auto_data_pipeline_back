@@ -79,8 +79,9 @@ public class LocationDB {
 				PreparedStatement pstmt_1 = conn.prepareStatement(
 						"Select vid from car where timestamp > extract(epoch from now()) Order by timestamp ASC limit 1;");
 				PreparedStatement pstmt_2 = conn.prepareStatement(
-						"Insert into vehlocation from car where vid = ? & timestamp > extract(epoch from now();"
-								+ "Delete From car where vid = ?;"))
+						"Insert into vehlocation (vid, lati, longi, status, timestamp) "
+						+ "select vid, lati, longi, status, timestamp from car where vid = ? and timestamp > extract(epoch from now());"
+                               + "Delete From car where vid = ?;"))
 
 		{
 			ResultSet rs = pstmt_1.executeQuery();
