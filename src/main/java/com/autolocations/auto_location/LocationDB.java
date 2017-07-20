@@ -87,6 +87,7 @@ public class LocationDB {
 			rs.next();
 			int newVehID = rs.getInt("vid");
 			pstmt_2.setLong(1, newVehID);
+			pstmt_2.setLong(2, newVehID);
 			pstmt_2.executeUpdate();
 			return newVehID;
 		}
