@@ -34,7 +34,9 @@ public class AppUser {
 		this.password_hash = password_hash;
 	}
 
+
 	public int getId() {
 		return id;
 	}
+
 }
