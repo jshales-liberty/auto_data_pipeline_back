@@ -77,22 +77,21 @@ public class LocationDB {
 	public static int addvehicle() throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt_1 = conn.prepareStatement(
-						"Select vid from car where timestamp > extract(epoch from now()) Order by timestamp ASC limit 1;");)
-//				PreparedStatement pstmt_2 = conn.prepareStatement(
-//						"Insert into vehlocation from car where vid = ? & timestamp > extract(epoch from now();"
-//								+ "Delete From car where vid = ?;"))
+						"Select vid from car where timestamp > extract(epoch from now()) Order by timestamp ASC limit 1;");
+				PreparedStatement pstmt_2 = conn.prepareStatement(
+						"Insert into vehlocation from car where vid = ? & timestamp > extract(epoch from now();"
+								+ "Delete From car where vid = ?;"))
 
 		{
-			//pstmt_1.setString(1, "public.\"Car\"");
 			ResultSet rs = pstmt_1.executeQuery();
 			rs.next();
 			int newVehID = rs.getInt("vid");
-//			pstmt_2.setLong(1, newVehID);
-//			pstmt_2.setLong(2, newVehID);
-//			pstmt_2.executeUpdate();
+			pstmt_2.setInt(1, newVehID);
+			pstmt_2.setInt(2, newVehID);
+			pstmt_2.executeUpdate();
 			return newVehID;
 		}
 
 	}
-	
+
 }
