@@ -29,7 +29,7 @@ public static boolean adduser(AppUser u) throws URISyntaxException, SQLException
 			return false; }
 			else {pstmt_2.setString(1,u.getEmail());
 			pstmt_2.setString(2, u.getPassword_hash());
-				rs = pstmt_2.executeQuery();
+				pstmt_2.executeQuery();
 				return true;
 		}
 
