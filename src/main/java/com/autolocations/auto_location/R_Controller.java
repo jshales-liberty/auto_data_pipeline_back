@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -46,5 +47,10 @@ public class R_Controller {
 	public List<Location> getHistLocs(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
 		return LocationDB.getHistoricalDataByVID(id);
 
+	}
+	@CrossOrigin(origins = "http://localhost:4400")
+	@RequestMapping(path = "/api/addUser", method = RequestMethod.POST)
+	@ResponseBody public AppUser addUser(@PathVariable(name = "username", required = true) String username, @PathVariable(name = "password_hash", required = true) String password_hash) throws URISyntaxException, SQLException {
+		return AppUser.addUser();
 	}
 }

@@ -11,50 +11,30 @@ public class AppUser {
 
 	int id;
 	String username;
-	String password;
 	String password_hash;
-//	String email;
 
-	public AppUser(String username, int id) {
-		this.id=id;
+	public AppUser(String username, String password_hash) {
 		this.username = username;
-		
-	}
-	public AppUser(String username, String password, String email) {
-		int id;
-		this.username = username;
-		this.password = password;
-//		this.email = email;
-	}
-
-	public AppUser(int id, String username, String password, String email) {
-		this.id = id;
-		this.username = username;
-		this.password = password;
-//		this.email = email;
-	}
-
-	public AppUser(String username, String password) {
-		this.username = username;
-		this.password = password;
-	}
-
-	public AppUser(String username) {
-		this.username = username;
-	}
+		this.password_hash = password_hash;
+}
 	
-	public void hashPassword() {
-		final String SALT = "ELIZABETHDAVID";
-		this.hashedPassword = this.password + SALT;
-		MessageDigest md = null;
-		try {
-			md = MessageDigest.getInstance("SHA");
-		} catch (NoSuchAlgorithmException ex) {
-			System.out.println(ex);
-		}
-		md.update(this.password.getBytes());
-		String digest = new String(md.digest());
-		this.hashedPassword=digest;
+	public String getUsername() {
+		return username;
 	}
-  
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword_hash() {
+		return password_hash;
+	}
+
+	public void setPassword_hash(String password_hash) {
+		this.password_hash = password_hash;
+	}
+
+	public int getId() {
+		return id;
+	}
 }
