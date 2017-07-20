@@ -38,11 +38,11 @@ public class UserDB {
 	public static int validateUser(AppUser u) throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
-						"select count(*) as count from users where email = ? and password_hash = ?;")) {
+						"select count(*) as count from users where email = ?;")) {
 			pstmt.setString(1, u.getEmail());
 			pstmt.setString(2, u.getPassword_hash());
 			ResultSet rs = pstmt.executeQuery();
-//			rs.next();
+			rs.next();
 //			if (rs.getInt("count") != 1) {
 				return rs.getInt("count");
 //			} else {
