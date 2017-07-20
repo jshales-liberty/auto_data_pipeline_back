@@ -18,6 +18,10 @@ public class AppUser {
 		this.password_hash = password_hash;
 }
 	
+	public AppUser() {
+		super();
+	}
+
 	public String getEmail() {
 		return email;
 	}
