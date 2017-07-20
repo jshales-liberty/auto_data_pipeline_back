@@ -59,9 +59,16 @@ public class R_Controller {
 			throws URISyntaxException, SQLException {
 		return LocationDB.addvehicle();
 	}
+	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/addUser", method = RequestMethod.POST)
 	@ResponseBody public boolean addUser(@RequestBody AppUser u) throws URISyntaxException, SQLException {
 		return UserDB.adduser(u);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(path = "/api/validateUser", method = RequestMethod.GET)
+	public boolean validateUser(AppUser u) throws URISyntaxException, SQLException {
+		return UserDB.validateUser(u);
 	}
 }

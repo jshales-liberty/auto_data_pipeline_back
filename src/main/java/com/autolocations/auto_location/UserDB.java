@@ -8,32 +8,47 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDB {
-	
-	private static Connection getConnection()
-			throws URISyntaxException, SQLException {
+
+	private static Connection getConnection() throws URISyntaxException, SQLException {
 		String dbUrl = System.getenv("HEROKU_POSTGRESQL_BROWN_JDBC_URL");
 		return DriverManager.getConnection(dbUrl);
 	}
 
-public static boolean adduser(AppUser u) throws URISyntaxException, SQLException {
-	try (Connection conn = getConnection();
-			PreparedStatement pstmt_1 = conn.prepareStatement(
-					"Select count(*) as count from users where email = ?;");
-			PreparedStatement pstmt_2 = conn.prepareStatement(
-					"Insert into users(email, password_hash) values (?, ?);"))
-
-	{pstmt_1.setString(1, u.getEmail());
-		ResultSet rs = pstmt_1.executeQuery();
-		rs.next();
-		if (rs.getInt("count") >= 1) {
-			return false; }
-			else {pstmt_2.setString(1,u.getEmail());
-			pstmt_2.setString(2, u.getPassword_hash());
+	public static boolean adduser(AppUser u) throws URISyntaxException, SQLException {
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt_1 = conn
+						.prepareStatement("Select count(*) as count from users where email = ?;");
+				PreparedStatement pstmt_2 = conn
+						.prepareStatement("Insert into users(email, password_hash) values (?, ?);"))
+		{
+			pstmt_1.setString(1, u.getEmail());
+			ResultSet rs = pstmt_1.executeQuery();
+			rs.next();
+			if (rs.getInt("count") >= 1) {
+				return false;
+			} else {
+				pstmt_2.setString(1, u.getEmail());
+				pstmt_2.setString(2, u.getPassword_hash());
 				pstmt_2.executeUpdate();
 				return true;
+			}
 		}
-
 	}
 
-}
+	public static boolean validateUser(AppUser u) throws URISyntaxException, SQLException {
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"select count(*) as count from public.users where email = ? and password_hash = ?;")) {
+			pstmt.setString(1, u.getEmail());
+			pstmt.setString(2, u.getPassword_hash());
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			if (rs.getInt("count") != 1) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+	}
+
 }
