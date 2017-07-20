@@ -42,7 +42,7 @@ public class UserDB {
 			pstmt.setString(1, u.getEmail());
 			pstmt.setString(2, u.getPassword_hash());
 			ResultSet rs = pstmt.executeQuery();
-			rs.next();
+//			rs.next();
 //			if (rs.getInt("count") != 1) {
 				return rs.getInt("count");
 //			} else {
