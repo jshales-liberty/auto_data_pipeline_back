@@ -39,7 +39,7 @@ public class UserDB {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 //						"select * from users where email = ?;")) {
-						"select count(*) as count from users where email = 'herbert@ttt.com' and password_hash = ?;")) {
+						"select count(*) as count from users where email = ? and password_hash = ?;")) {
 			pstmt.setString(1, u.getEmail());
 			System.out.println(u.toString());
 			pstmt.setString(2, u.getPassword_hash());
