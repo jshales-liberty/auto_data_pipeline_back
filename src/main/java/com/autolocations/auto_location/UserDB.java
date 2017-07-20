@@ -38,7 +38,8 @@ public class UserDB {
 	public static int validateUser(AppUser u) throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
-						"select count(*) as count from users where email = ?;")) {
+//						"select count(*) as count from users where email = ?;")) {
+						"select * from users where email = ?;")) {
 			pstmt.setString(1, u.getEmail());
 //			pstmt.setString(2, u.getPassword_hash());
 			ResultSet rs = pstmt.executeQuery();
