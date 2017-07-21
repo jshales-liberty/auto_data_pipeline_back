@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DriverDB {
 	public static Driver getDriverInfo(int vid)
@@ -22,6 +24,25 @@ public class DriverDB {
 					rs.getInt("vehicle_year"));
 
 			return driver;
+		}
+	}
+	
+	public static List<Driver> getDriverInfo()
+			throws URISyntaxException, SQLException {
+		try (Connection conn = LocationDB.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"Select * from driver;")) {
+			ResultSet rs = pstmt.executeQuery();
+			List<Driver> drivers = new ArrayList<Driver>();
+			while (rs.next()) {
+				Driver driver = new Driver(rs.getInt("vid"),
+						rs.getString("driver_first_name"),
+						rs.getString("driver_last_name"),
+						rs.getString("vehicle_make"), rs.getString("vehicle_model"),
+						rs.getInt("vehicle_year"));
+				drivers.add(driver);
+			}
+			return drivers;
 		}
 	}
 
