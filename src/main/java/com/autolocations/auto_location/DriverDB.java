@@ -60,6 +60,18 @@ public class DriverDB {
 			pstmt.setString(5, d.getVehicle_make());
 			pstmt.setString(6, d.getVehicle_model());
 			pstmt.executeUpdate();
+			
+
+		}
+	}
+
+	public static void deleteDriver(int vid) throws URISyntaxException, SQLException {
+		try (Connection conn = LocationDB.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"Delete from driver where vid = ?;")) {
+			pstmt.setInt(1, vid);
+			pstmt.executeUpdate();
+			
 
 		}
 	}
