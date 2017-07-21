@@ -45,6 +45,18 @@ public class Driver {
 		this.vehicle_year = vehicle_year;
 	}
 
+	public Driver() {
+		super();
+	}
+	public Driver(String driver_first_name, String driver_last_name,
+			String vehicle_make, String vehicle_model, int vehicle_year) {
+		super();
+		this.driver_first_name = driver_first_name;
+		this.driver_last_name = driver_last_name;
+		this.vehicle_make = vehicle_make;
+		this.vehicle_model = vehicle_model;
+		this.vehicle_year = vehicle_year;
+	}
 	public Driver(int vid, String driver_first_name, String driver_last_name,
 			String vehicle_make, String vehicle_model, int vehicle_year) {
 		super();
