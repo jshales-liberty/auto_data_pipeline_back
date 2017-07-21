@@ -35,20 +35,22 @@ public class UserDB {
 		}
 	}
 
-	public static int validateUser(AppUser u) throws URISyntaxException, SQLException {
+	public static boolean validateUser(AppUser u) throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
-						"select count(*) as count from users where email = ?;")) {
+//						"select * from users where email = ?;")) {
+						"select count(*) as count from users where email = ? and password_hash = ?;")) {
 			pstmt.setString(1, u.getEmail());
-//			pstmt.setString(2, u.getPassword_hash());
+			System.out.println(u.toString());
+			pstmt.setString(2, u.getPassword_hash());
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
-//			if (rs.getInt("count") != 1) {
-				return rs.getInt("count");
-//			} else {
-//				return rs.getInt("count");
+			if (rs.getInt("count") != 1) {
+				return false;
+			} else {
+				return true;
 			}
 		}
 	}
 
-//}
+}

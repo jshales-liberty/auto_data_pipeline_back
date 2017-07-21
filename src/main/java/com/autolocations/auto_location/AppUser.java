@@ -19,6 +19,11 @@ public class AppUser {
 		return email;
 	}
 
+	@Override
+	public String toString() {
+		return "AppUser [id=" + id + ", email=" + email + ", password_hash=" + password_hash + "]";
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
