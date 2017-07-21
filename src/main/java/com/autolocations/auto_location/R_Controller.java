@@ -58,9 +58,12 @@ public class R_Controller {
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/addcar", method = RequestMethod.GET)
-	public int addrandcarr() throws URISyntaxException, SQLException {
-		return LocationDB.addvehicle();
+	@RequestMapping(path = "/api/addcar", method = RequestMethod.POST)
+	@ResponseBody public int addVehAndDriver(@RequestBody Driver d) throws URISyntaxException, SQLException {
+		int gen_id = LocationDB.addvehicle();
+		d.setVid(gen_id);
+		DriverDB.addDriver(d);
+		return gen_id;
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -82,4 +85,5 @@ public class R_Controller {
 	public Driver validateUser(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
 		return DriverDB.getDriverInfo(id);
 	}
-}
+	}
+

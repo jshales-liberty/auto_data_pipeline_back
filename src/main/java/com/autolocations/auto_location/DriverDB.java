@@ -24,4 +24,22 @@ public class DriverDB {
 			return driver;
 		}
 	}
+
+	public static void addDriver(Driver d)
+			throws URISyntaxException, SQLException {
+		try (Connection conn = LocationDB.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"Insert into driver("
+						+ "vid, driver_first_name, driver_last_name, vehicle_year, vehicle_make, vehicle_model)"
+						+ " values (?,?,?,?,?,?);")) {
+			pstmt.setLong(1, d.getVid());
+			pstmt.setString(2, d.getDriver_first_name());
+			pstmt.setString(3, d.getDriver_last_name());
+			pstmt.setInt(4, d.getVehicle_year());
+			pstmt.setString(5, d.getVehicle_make());
+			pstmt.setString(6, d.getVehicle_model());
+			pstmt.executeUpdate();
+
+		}
+	}
 }
