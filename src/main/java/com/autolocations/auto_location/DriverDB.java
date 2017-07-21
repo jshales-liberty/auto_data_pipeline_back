@@ -11,7 +11,7 @@ public class DriverDB {
 			throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
-						"Select * from Driver where vid = ?;")) {
+						"Select * from driver where vid = ?;")) {
 			pstmt.setLong(1, vid);
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
