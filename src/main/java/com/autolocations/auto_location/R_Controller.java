@@ -89,6 +89,6 @@ public class R_Controller {
 	}
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/driverinfo", method = RequestMethod.GET)
-public List<Driver> getAllDrivers(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
+public List<Driver> getAllDrivers() throws URISyntaxException, SQLException {
 	return DriverDB.getDriverInfo();}}
 
