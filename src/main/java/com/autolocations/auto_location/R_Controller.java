@@ -58,7 +58,7 @@ public class R_Controller {
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/addcar", method = RequestMethod.POST)
+	@RequestMapping(path = "/api/addDriver", method = RequestMethod.POST)
 	@ResponseBody public int addVehAndDriver(@RequestBody Driver d) throws URISyntaxException, SQLException {
 		int gen_id = LocationDB.addvehicle();
 		d.setVid(gen_id);
