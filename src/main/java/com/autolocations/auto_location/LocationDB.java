@@ -11,7 +11,7 @@ import java.util.List;
 
 public class LocationDB {
 
-	private static Connection getConnection()
+	public static Connection getConnection()
 			throws URISyntaxException, SQLException {
 		String dbUrl = System.getenv("HEROKU_POSTGRESQL_BROWN_JDBC_URL");
 		return DriverManager.getConnection(dbUrl);
@@ -77,11 +77,11 @@ public class LocationDB {
 	public static int addvehicle() throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt_1 = conn.prepareStatement(
-						"Select vid from car where timestamp > extract(epoch from now()) Order by timestamp ASC limit 1;");
+						"Select vid from vehlocation_reserve where timestamp > extract(epoch from now()) Order by timestamp ASC limit 1;");
 				PreparedStatement pstmt_2 = conn.prepareStatement(
 						"Insert into vehlocation (vid, lati, longi, status, timestamp) "
-						+ "select vid, lati, longi, status, timestamp from car where vid = ? and timestamp > extract(epoch from now());"
-                               + "Delete From car where vid = ?;"))
+								+ "select vid, lati, longi, status, timestamp from vehlocation_reserve where vid = ? and timestamp > extract(epoch from now());"
+								+ "Delete From vehlocation_reserve where vid = ?;"))
 
 		{
 			ResultSet rs = pstmt_1.executeQuery();
@@ -95,4 +95,28 @@ public class LocationDB {
 
 	}
 
+	public static List<Location> getHistoricalDataByVID(int id, int hop_count)
+			throws URISyntaxException, SQLException {
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
+								+ "from vehlocation t1 where vid=? and timestamp < extract(epoch from now()) "
+								+ "ORDER BY timestamp ASC limit ?;");) {
+			pstmt.setLong(1, id);
+			pstmt.setInt(2, hop_count);
+			ResultSet rs = pstmt.executeQuery();
+			List<Location> locations = new ArrayList<Location>();
+			while (rs.next()) {
+				Location location = new Location();
+				location.setId(rs.getInt("vid"));
+				location.setLati(rs.getFloat("lati"));
+				location.setLongi(rs.getFloat("longi"));
+				location.setStatus(rs.getInt("status"));
+				location.setTimestamp(rs.getInt("timestamp"));
+				locations.add(location);
+			}
+			return locations;
+		}
+
+	}
 }

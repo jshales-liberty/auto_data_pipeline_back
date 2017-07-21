@@ -48,27 +48,38 @@ public class R_Controller {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/routehistory/{id}", method = RequestMethod.GET)
 	public List<Location> getHistLocs(
-			@PathVariable(name = "id", required = true) int id)
+			@PathVariable(name = "id", required = true) int id, int hop_count)
 			throws URISyntaxException, SQLException {
-		return LocationDB.getHistoricalDataByVID(id);
+		if (hop_count != 0) {
+			return LocationDB.getHistoricalDataByVID(id, hop_count);
+		} else {
+			return LocationDB.getHistoricalDataByVID(id);
+		}
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/addcar", method = RequestMethod.GET)
-	public int addrandcarr()
-			throws URISyntaxException, SQLException {
+	public int addrandcarr() throws URISyntaxException, SQLException {
 		return LocationDB.addvehicle();
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/addUser", method = RequestMethod.POST)
-	@ResponseBody public boolean addUser(@RequestBody AppUser u) throws URISyntaxException, SQLException {
+	@ResponseBody
+	public boolean addUser(@RequestBody AppUser u)
+			throws URISyntaxException, SQLException {
 		return UserDB.adduser(u);
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/validateUser", method = RequestMethod.POST)
 	public int validateUser(AppUser u) throws URISyntaxException, SQLException {
 		return UserDB.validateUser(u);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(path = "/api/driverinfo/{id}", method = RequestMethod.GET)
+	public Driver validateUser(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
+		return DriverDB.getDriverInfo(id);
 	}
 }
