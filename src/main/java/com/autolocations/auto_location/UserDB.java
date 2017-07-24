@@ -66,7 +66,7 @@ public class UserDB {
 			pstmt.setString(2, u.getPassword_hash());
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
-			if (rs.getInt("count") != 1) {
+			if (rs.getInt("count") == 1) {
 				return u;
 			} else {
 				return null;
