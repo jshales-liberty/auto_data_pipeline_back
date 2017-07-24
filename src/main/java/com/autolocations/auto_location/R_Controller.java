@@ -76,14 +76,14 @@ public class R_Controller {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/addUser", method = RequestMethod.POST)
 	@ResponseBody
-	public boolean addUser(@RequestBody AppUser u)
+	public AppUser addUser(@RequestBody AppUser u)
 			throws URISyntaxException, SQLException {
 		return UserDB.adduser(u);
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/validateUser", method = RequestMethod.POST)
-	@ResponseBody public boolean validateUser(@RequestBody AppUser u) throws URISyntaxException, SQLException {
+	@ResponseBody public AppUser validateUser(@RequestBody AppUser u) throws URISyntaxException, SQLException {
 		return UserDB.validateUser(u);
 	}
 	

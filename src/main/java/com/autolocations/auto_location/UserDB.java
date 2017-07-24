@@ -14,7 +14,7 @@ public class UserDB {
 		return DriverManager.getConnection(dbUrl);
 	}
 
-	public static boolean adduser(AppUser u) throws URISyntaxException, SQLException {
+	public static AppUser adduser(AppUser u) throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt_1 = conn
 						.prepareStatement("Select count(*) as count from users where email = ?;");
@@ -25,17 +25,17 @@ public class UserDB {
 			ResultSet rs = pstmt_1.executeQuery();
 			rs.next();
 			if (rs.getInt("count") >= 1) {
-				return false;
+				return null;
 			} else {
 				pstmt_2.setString(1, u.getEmail());
 				pstmt_2.setString(2, u.getPassword_hash());
 				pstmt_2.executeUpdate();
-				return true;
+				return u;
 			}
 		}
 	}
 
-	public static boolean validateUser(AppUser u) throws URISyntaxException, SQLException {
+	public static AppUser validateUser(AppUser u) throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 //						"select * from users where email = ?;")) {
@@ -46,9 +46,9 @@ public class UserDB {
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			if (rs.getInt("count") != 1) {
-				return false;
+				return u;
 			} else {
-				return true;
+				return null;
 			}
 		}
 	}
