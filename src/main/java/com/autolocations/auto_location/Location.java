@@ -9,6 +9,7 @@ public class Location {
 	private float longi;
 	private int status;
 	private int timestamp;
+	private double distanceFromLast;
 
 	@Override
 	public String toString() {
@@ -61,4 +62,24 @@ public class Location {
 		this.timestamp = timestamp;
 	}
 
+	public double calcDistance(double lati, double longi)
+	{
+	
+			  double p = 0.017453292519943295;    // Math.PI / 180
+			  double a = 0.5 - Math.cos((this.getLati() - lati) * p)/2 + 
+			          Math.cos(lati * p) * Math.cos(this.getLati() * p) * 
+			          (1 - Math.cos((this.getLongi() - longi) * p))/2;
+
+			  return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+			}
+
+	public double getDistanceFromLast() {
+		return distanceFromLast;
+	}
+
+	public void setDistanceFromLast(double distanceFromLast) {
+		this.distanceFromLast = distanceFromLast;
+	}
+	
+	
 }
