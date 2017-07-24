@@ -113,5 +113,12 @@ public List<Driver> getAllDrivers() throws URISyntaxException, SQLException {
 public void delDriver(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
 	DriverDB.deleteDriver(id);
 	LocationDB.deleteVehLocations(id);}
+
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(path = "/api/getDOW/{id}", method = RequestMethod.GET)
+public List<Location> getDOWById(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
+	return LocationDB.getDOWbyId(id);
+	
+}
 }
 
