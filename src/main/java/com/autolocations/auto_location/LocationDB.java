@@ -59,6 +59,8 @@ public class LocationDB {
 								+ "from vehlocation t1 where vid=? and timestamp < extract(epoch from now()) ORDER BY timestamp ASC;");) {
 			pstmt.setLong(1, id);
 			ResultSet rs = pstmt.executeQuery();
+			double prev_lati;
+			double prev_longi;
 			List<Location> locations = new ArrayList<Location>();
 			while (rs.next()) {
 				Location location = new Location();

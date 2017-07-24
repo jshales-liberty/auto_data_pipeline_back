@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDB {
 
@@ -34,6 +36,17 @@ public class UserDB {
 			}
 		}
 	}
+	
+	public static List<AppUser> getUsers() throws URISyntaxException, SQLException {
+		try (Connection conn = getConnection();
+			PreparedStatement pstmt = conn.prepareStatement("select * from users = ?;")) {
+			ResultSet rs = pstmt.executeQuery();
+			List<AppUser> users = new ArrayList<AppUser>();
+			while (rs.next()) {
+				AppUser u = new AppUser(rs.getString("username"), rs.getString("password_hash"));
+						users.add(u);
+		}
+			return users;}}
 
 	public static AppUser validateUser(AppUser u) throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
