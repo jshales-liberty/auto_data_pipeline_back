@@ -18,6 +18,12 @@ public class Location {
 		return "Location [id=" + id + ", lati=" + lati + ", longi=" + longi
 				+ ", status=" + status + ", timestamp=" + timestamp + "]";
 	}
+	
+	public Location(int dow, int status_total) {
+		this.dow=dow;
+		this.status_total = status_total;
+		
+	}
 
 	public Location() {
 	}
@@ -98,6 +104,7 @@ public class Location {
 	public void setStatus_total(int status_total) {
 		this.status_total = status_total;
 	}
+
 
 	
 	
