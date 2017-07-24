@@ -72,7 +72,7 @@ public class R_Controller {
 		Driver existing = DriverDB.getDriverInfo(id);
 		existing.merge(d);
 		DriverDB.updateDriver(existing);
-		return DriverDB.getDriverInfo(d.getVid());
+		return DriverDB.getDriverInfo(id);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
