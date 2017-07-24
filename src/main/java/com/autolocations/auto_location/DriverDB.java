@@ -64,6 +64,25 @@ public class DriverDB {
 
 		}
 	}
+	
+	public static void updateDriver(Driver d)
+			throws URISyntaxException, SQLException {
+		try (Connection conn = LocationDB.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"Update driver "
+						+ "set driver_first_name = ?, driver_last_name = ?, vehicle_year = ?, vehicle_make = ?, vehicle_model = ?"
+						+ "where vid = ?;")) {
+			pstmt.setString(1, d.getDriver_first_name());
+			pstmt.setString(2, d.getDriver_last_name());
+			pstmt.setInt(3, d.getVehicle_year());
+			pstmt.setString(4, d.getVehicle_make());
+			pstmt.setString(5, d.getVehicle_model());
+			pstmt.setLong(6, d.getVid());
+			pstmt.executeUpdate();
+			
+
+		}
+	}
 
 	public static void deleteDriver(int vid) throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
