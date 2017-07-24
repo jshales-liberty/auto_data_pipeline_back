@@ -11,18 +11,19 @@ import java.util.List;
 
 public class UserDB {
 
-	private static Connection getConnection() throws URISyntaxException, SQLException {
+	private static Connection getConnection()
+			throws URISyntaxException, SQLException {
 		String dbUrl = System.getenv("HEROKU_POSTGRESQL_BROWN_JDBC_URL");
 		return DriverManager.getConnection(dbUrl);
 	}
 
-	public static AppUser adduser(AppUser u) throws URISyntaxException, SQLException {
+	public static AppUser adduser(AppUser u)
+			throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
-				PreparedStatement pstmt_1 = conn
-						.prepareStatement("Select count(*) as count from users where email = ?;");
-				PreparedStatement pstmt_2 = conn
-						.prepareStatement("Insert into users(email, password_hash) values (?, ?);"))
-		{
+				PreparedStatement pstmt_1 = conn.prepareStatement(
+						"Select count(*) as count from users where email = ?;");
+				PreparedStatement pstmt_2 = conn.prepareStatement(
+						"Insert into users(email, password_hash) values (?, ?);")) {
 			pstmt_1.setString(1, u.getEmail());
 			ResultSet rs = pstmt_1.executeQuery();
 			rs.next();
@@ -36,22 +37,29 @@ public class UserDB {
 			}
 		}
 	}
-	
-	public static List<AppUser> getUsers() throws URISyntaxException, SQLException {
+
+	public static List<AppUser> getUsers()
+			throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("select * from users;")) {
+				PreparedStatement pstmt = conn
+						.prepareStatement("select * from users;")) {
 			ResultSet rs = pstmt.executeQuery();
 			List<AppUser> users = new ArrayList<AppUser>();
 			while (rs.next()) {
-				AppUser u = new AppUser(rs.getString("email"), rs.getString("password_hash"));
-						users.add(u);
+				AppUser u = new AppUser(rs.getString("email"),
+						rs.getString("password_hash"));
+				u.setId(rs.getInt("id"));
+				users.add(u);
+			}
+			return users;
 		}
-			return users;}}
+	}
 
-	public static AppUser validateUser(AppUser u) throws URISyntaxException, SQLException {
+	public static AppUser validateUser(AppUser u)
+			throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
-//						"select * from users where email = ?;")) {
+						// "select * from users where email = ?;")) {
 						"select count(*) as count from users where email = ? and password_hash = ?;")) {
 			pstmt.setString(1, u.getEmail());
 			System.out.println(u.toString());

@@ -24,6 +24,10 @@ public class AppUser {
 		return "AppUser [id=" + id + ", email=" + email + ", password_hash=" + password_hash + "]";
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
