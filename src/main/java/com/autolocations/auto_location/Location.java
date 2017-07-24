@@ -11,6 +11,7 @@ public class Location {
 	private int timestamp;
 	private double distanceFromLast;
 	private int dow;
+	private int hour;
 	private int status_total;
 
 	@Override
@@ -95,6 +96,14 @@ public class Location {
 
 	public void setDow(int dow) {
 		this.dow = dow;
+	}
+
+	public int getHour() {
+		return hour;
+	}
+
+	public void setHour(int hour) {
+		this.hour = hour;
 	}
 
 	public int getStatus_total() {
