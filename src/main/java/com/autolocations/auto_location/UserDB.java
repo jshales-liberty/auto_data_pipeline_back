@@ -39,7 +39,7 @@ public class UserDB {
 	
 	public static List<AppUser> getUsers() throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement("select * from users = ?;")) {
+			PreparedStatement pstmt = conn.prepareStatement("select * from users;")) {
 			ResultSet rs = pstmt.executeQuery();
 			List<AppUser> users = new ArrayList<AppUser>();
 			while (rs.next()) {
