@@ -31,7 +31,7 @@ public class DriverDB {
 			throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
-						"Select * from driver;")) {
+						"Select * from driver ORDER BY driver_last_name;")) {
 			ResultSet rs = pstmt.executeQuery();
 			List<Driver> drivers = new ArrayList<Driver>();
 			while (rs.next()) {
