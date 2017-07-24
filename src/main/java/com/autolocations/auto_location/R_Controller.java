@@ -67,6 +67,13 @@ public class R_Controller {
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(path = "/api/updateDriver", method = RequestMethod.PUT)
+	@ResponseBody public Driver updateVehAndDriver(@RequestBody Driver d) throws URISyntaxException, SQLException {
+		DriverDB.updateDriver(d);
+		return DriverDB.getDriverInfo(d.getVid());
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/addUser", method = RequestMethod.POST)
 	@ResponseBody
 	public boolean addUser(@RequestBody AppUser u)

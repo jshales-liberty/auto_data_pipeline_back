@@ -74,5 +74,22 @@ public class Driver {
 				+ vehicle_make + ", vehicle_model=" + vehicle_model
 				+ ", vehicle_year=" + vehicle_year + "]";
 	}
-	
+    //PUT method
+    public void merge(Driver other) {
+        if (other.driver_first_name != null) {
+            this.driver_first_name = other.driver_first_name;
+        }
+        if (other.driver_last_name != null){
+            this.driver_last_name=other.driver_last_name;
+        }
+        if (other.vehicle_make != null){
+            this.vehicle_make=other.vehicle_make;
+        }
+        if (other.vehicle_model != null){
+            this.vehicle_model=other.vehicle_model;
+        }
+        if (other.vehicle_year != 0){
+            this.vehicle_year=other.vehicle_year;
+        }
+    }
 }
