@@ -43,7 +43,7 @@ public class UserDB {
 			ResultSet rs = pstmt.executeQuery();
 			List<AppUser> users = new ArrayList<AppUser>();
 			while (rs.next()) {
-				AppUser u = new AppUser(rs.getString("username"), rs.getString("password_hash"));
+				AppUser u = new AppUser(rs.getString("email"), rs.getString("password_hash"));
 						users.add(u);
 		}
 			return users;}}
