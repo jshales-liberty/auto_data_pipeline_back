@@ -10,6 +10,8 @@ public class Location {
 	private int status;
 	private int timestamp;
 	private double distanceFromLast;
+	private int dow;
+	private int status_total;
 
 	@Override
 	public String toString() {
@@ -80,6 +82,22 @@ public class Location {
 	public void setDistanceFromLast(double distanceFromLast) {
 		this.distanceFromLast = distanceFromLast;
 	}
+
+//	public int getDow() {
+//		return dow;
+//	}
+//
+//	public void setDow(int dow) {
+//		this.dow = dow;
+//	}
+//
+//	public int getStatus_total() {
+//		return status_total;
+//	}
+//
+//	public void setStatus_total(int status_total) {
+//		this.status_total = status_total;
+//	}
 	
 	
 }

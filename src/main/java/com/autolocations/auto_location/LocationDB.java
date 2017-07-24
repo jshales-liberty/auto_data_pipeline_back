@@ -121,6 +121,27 @@ public class LocationDB {
 		}
 
 	}
+	
+	public static List<Location> getDOWbyId(int id)
+			throws URISyntaxException, SQLException {
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"SELECT extract('dow' from to_timestamp(timestamp)) AS dow, sum(status) AS status_total "
+						+ "FROM vehlocation where vid = ? "
+						+ "GROUP BY 1 ORDER BY 1;");) {
+			pstmt.setLong(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			List<Location> dowdata = new ArrayList<Location>();
+			while (rs.next()) {
+				Location dow = new Location();
+				rs.getInt("dow");
+				rs.getInt("status_total");
+			}
+			return dowdata;
+		}
+
+	}
+	
 	public static void deleteVehLocations(int id) throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
 				PreparedStatement pstmt_1 = conn.prepareStatement(
