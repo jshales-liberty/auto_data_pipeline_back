@@ -134,8 +134,8 @@ public class LocationDB {
 			List<Location> dowdata = new ArrayList<Location>();
 			while (rs.next()) {
 				Location dow = new Location();
-				rs.getInt("dow");
-				rs.getInt("status_total");
+				dow.setDow(rs.getInt("dow"));
+				dow.setStatus_total(rs.getInt("status_total"));			
 			}
 			return dowdata;
 		}

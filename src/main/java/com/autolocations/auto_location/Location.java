@@ -83,21 +83,22 @@ public class Location {
 		this.distanceFromLast = distanceFromLast;
 	}
 
-//	public int getDow() {
-//		return dow;
-//	}
-//
-//	public void setDow(int dow) {
-//		this.dow = dow;
-//	}
-//
-//	public int getStatus_total() {
-//		return status_total;
-//	}
-//
-//	public void setStatus_total(int status_total) {
-//		this.status_total = status_total;
-//	}
+	public int getDow() {
+		return dow;
+	}
+
+	public void setDow(int dow) {
+		this.dow = dow;
+	}
+
+	public int getStatus_total() {
+		return status_total;
+	}
+
+	public void setStatus_total(int status_total) {
+		this.status_total = status_total;
+	}
+
 	
 	
 }
