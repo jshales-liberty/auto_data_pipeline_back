@@ -93,8 +93,8 @@ public List<Driver> getAllDrivers() throws URISyntaxException, SQLException {
 	return DriverDB.getDriverInfo();}
 
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/api/driver", method = RequestMethod.DELETE)
-public void delDriver(int id) throws URISyntaxException, SQLException {
+@RequestMapping(path = "/api/driver/{id}", method = RequestMethod.DELETE)
+public void delDriver(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
 	DriverDB.deleteDriver(id);
 	LocationDB.deleteVehLocations(id);}
 }
