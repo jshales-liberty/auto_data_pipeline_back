@@ -135,7 +135,8 @@ public class LocationDB {
 			while (rs.next()) {
 				Location dow = new Location();
 				dow.setDow(rs.getInt("dow"));
-				dow.setStatus_total(rs.getInt("status_total"));			
+				dow.setStatus_total(rs.getInt("status_total"));
+				dowdata.add(dow);
 			}
 			return dowdata;
 		}
