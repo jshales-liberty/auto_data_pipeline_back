@@ -69,7 +69,6 @@ public class R_Controller {
 	@CrossOrigin(origins = "http://localhost:4200")
 
 	@RequestMapping(path = "/api/User", method = RequestMethod.GET)
-	@ResponseBody
 	public List<AppUser> getUsers()
 			throws URISyntaxException, SQLException {
 		return UserDB.getUsers();
