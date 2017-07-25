@@ -39,7 +39,7 @@ public class LocationDB {
 			List<Location> locations = new ArrayList<Location>();
 			while (rs.next()) {
 				Location location = new Location();
-				location.setId(rs.getInt("vid"));
+				location.setVid(rs.getInt("vid"));
 				location.setLati(rs.getFloat("lati"));
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
@@ -65,7 +65,7 @@ public class LocationDB {
 			double prev_longi = 0;
 			while (rs.next()) {
 				Location location = new Location();
-				location.setId(rs.getInt("vid"));
+				location.setVid(rs.getInt("vid"));
 				location.setLati(rs.getFloat("lati"));
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
@@ -124,7 +124,7 @@ public class LocationDB {
 			double prev_longi = 0;
 			while (rs.next()) {
 				Location location = new Location();
-				location.setId(rs.getInt("vid"));
+				location.setVid(rs.getInt("vid"));
 				location.setLati(rs.getFloat("lati"));
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
@@ -146,7 +146,7 @@ public class LocationDB {
 
 	}
 
-	public static void deleteVehLocations(int id)
+	public static void deleteVehLocations(int vid)
 			throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
 				PreparedStatement pstmt_1 = conn.prepareStatement(
@@ -155,8 +155,8 @@ public class LocationDB {
 								+ "Delete From vehlocation where vid = ?;"))
 
 		{
-			pstmt_1.setInt(1, id);
-			pstmt_1.setInt(2, id);
+			pstmt_1.setInt(1, vid);
+			pstmt_1.setInt(2, vid);
 			pstmt_1.executeUpdate();
 		}
 

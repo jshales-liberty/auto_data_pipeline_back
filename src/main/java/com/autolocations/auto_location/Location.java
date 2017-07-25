@@ -23,11 +23,11 @@ public class Location {
 //@SerializedName("id")
 	private int vid;
 
-	public int getId() {
+	public int getVid() {
 		return vid;
 	}
 
-	public void setId(int vid) {
+	public void setVid(int vid) {
 		this.vid = vid;
 	}
 
