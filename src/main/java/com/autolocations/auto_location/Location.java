@@ -20,7 +20,7 @@ public class Location {
 
 	public Location() {
 	}
-@SerializedName("id")
+//@SerializedName("id")
 	private int vid;
 
 	public int getId() {
