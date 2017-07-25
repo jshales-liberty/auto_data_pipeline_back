@@ -32,7 +32,7 @@ public class SummaryDB {
 			while (rs.next()) {
 				Summary dow = new Summary();
 //				dow.setDow(rs.getInt("dow"));
-				dow.setDow(DayOfWeek.valueOf("dow"));
+				dow.setDow(DayOfWeek.valueOf(rs.getString("dow")));
 				dow.setStatus_total(rs.getInt("status_total"));
 				dowdata.add(dow);
 			}
