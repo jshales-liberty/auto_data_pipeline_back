@@ -82,6 +82,8 @@ public class LocationDB {
 				location.setDistanceFromLast(
 						location.calcDistance(prev_lati, prev_longi));
 				cumulative_distance += location.getDistanceFromLast();
+				prev_lati = rs.getFloat("lati");
+				prev_longi = rs.getFloat("longi");
 				location.setCumulativeDistance(cumulative_distance);
 				locations.add(location);
 			}
