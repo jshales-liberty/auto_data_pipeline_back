@@ -14,21 +14,21 @@ public class Location {
 
 	@Override
 	public String toString() {
-		return "Location [id=" + id + ", lati=" + lati + ", longi=" + longi
+		return "Location [id=" + vid + ", lati=" + lati + ", longi=" + longi
 				+ ", status=" + status + ", timestamp=" + timestamp + "]";
 	}
 
 	public Location() {
 	}
-
-	private int id;
+@SerializedName("id")
+	private int vid;
 
 	public int getId() {
-		return id;
+		return vid;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int vid) {
+		this.vid = vid;
 	}
 
 	public float getLati() {

@@ -70,12 +70,13 @@ public class LocationDB {
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
 				location.setTimestamp(rs.getInt("timestamp"));
-				if (prev_lati == 0 & prev_longi == 0)
-				{location.setDistanceFromLast(0);}
-				else{
-				location.setDistanceFromLast(
-						location.calcDistance(prev_lati, prev_longi));
-				cumulative_distance += location.getDistanceFromLast();}
+				if (prev_lati == 0 & prev_longi == 0) {
+					location.setDistanceFromLast(0);
+				} else {
+					location.setDistanceFromLast(
+							location.calcDistance(prev_lati, prev_longi));
+					cumulative_distance += location.getDistanceFromLast();
+				}
 				prev_lati = rs.getFloat("lati");
 				prev_longi = rs.getFloat("longi");
 				location.setCumulativeDistance(cumulative_distance);
@@ -128,12 +129,13 @@ public class LocationDB {
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
 				location.setTimestamp(rs.getInt("timestamp"));
-				if (prev_lati == 0 & prev_longi == 0)
-				{location.setDistanceFromLast(0);}
-				else{
-				location.setDistanceFromLast(
-						location.calcDistance(prev_lati, prev_longi));
-				cumulative_distance += location.getDistanceFromLast();}
+				if (prev_lati == 0 & prev_longi == 0) {
+					location.setDistanceFromLast(0);
+				} else {
+					location.setDistanceFromLast(
+							location.calcDistance(prev_lati, prev_longi));
+					cumulative_distance += location.getDistanceFromLast();
+				}
 				prev_lati = rs.getFloat("lati");
 				prev_longi = rs.getFloat("longi");
 				location.setCumulativeDistance(cumulative_distance);
@@ -144,7 +146,8 @@ public class LocationDB {
 
 	}
 
-	public static void deleteVehLocations(int id) throws URISyntaxException, SQLException {
+	public static void deleteVehLocations(int id)
+			throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
 				PreparedStatement pstmt_1 = conn.prepareStatement(
 						"Insert into vehlocation_reserve (vid, lati, longi, status, timestamp) "
