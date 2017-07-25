@@ -1,29 +1,34 @@
 package com.autolocations.auto_location;
 
+import com.autolocations.auto_location.Summary.DayOfWeek;
 import com.google.gson.annotations.SerializedName;
 
 public class Summary {
-	private int dow;
+	private DayOfWeek dow;
 	private int hour;
 	private int status_total;
 
 
-	public Summary(int dow, int hour, int status_total) {
+	public Summary(DayOfWeek dow, int hour, int status_total) {
 		this.dow=dow;
 		this.hour=hour;
 		this.status_total = status_total;
 		
 	}
 	
+	public enum DayOfWeek {
+	    Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday;
+	}
+	
 	public Summary() {
 	}
 
-public int getDow() {
+public DayOfWeek getDow() {
 	return dow;
 }
 
-public void setDow(int dow) {
-	this.dow = dow;
+public void setDow(DayOfWeek dayOfWeek) {
+	this.dow = dayOfWeek;
 }
 
 public int getHour() {

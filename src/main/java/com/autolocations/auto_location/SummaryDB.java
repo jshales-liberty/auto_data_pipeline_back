@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.autolocations.auto_location.Summary.DayOfWeek;
+
 public class SummaryDB {
 
 	public static Connection getConnection()
@@ -22,14 +24,15 @@ public class SummaryDB {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"SELECT extract('dow' from to_timestamp(timestamp)) AS dow, sum(status) AS status_total "
-						+ "FROM vehlocation where vid = ? "
+						+ "FROM vehlocation where vid = ? and timestamp < extract(epoch from now())"
 						+ "GROUP BY 1 ORDER BY 1;");) {
 			pstmt.setLong(1, id);
 			ResultSet rs = pstmt.executeQuery();
 			List<Summary> dowdata = new ArrayList<Summary>();
 			while (rs.next()) {
 				Summary dow = new Summary();
-				dow.setDow(rs.getInt("dow"));
+//				dow.setDow(rs.getInt("dow"));
+				dow.setDow(DayOfWeek.valueOf("dow"));
 				dow.setStatus_total(rs.getInt("status_total"));
 				dowdata.add(dow);
 			}
@@ -43,7 +46,7 @@ public class SummaryDB {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"SELECT extract('hour' from to_timestamp(timestamp)) AS hour, sum(status) AS status_total "
-						+ "FROM vehlocation where vid = ? "
+						+ "FROM vehlocation where vid = ? and timestamp < extract(epoch from now())"
 						+ "GROUP BY 1 ORDER BY 1;");) {
 			pstmt.setLong(1, id);
 			ResultSet rs = pstmt.executeQuery();
