@@ -61,27 +61,21 @@ public class LocationDB {
 			ResultSet rs = pstmt.executeQuery();
 			double cumulative_distance = 0;
 			List<Location> locations = new ArrayList<Location>();
-			rs.next();
-			Location location = new Location();
-			location.setId(rs.getInt("vid"));
-			location.setLati(rs.getFloat("lati"));
-			location.setLongi(rs.getFloat("longi"));
-			double prev_lati = rs.getFloat("lati");
-			double prev_longi = rs.getFloat("longi");
-			location.setStatus(rs.getInt("status"));
-			location.setTimestamp(rs.getInt("timestamp"));
-			location.setDistanceFromLast(0);
-			location.setCumulativeDistance(cumulative_distance);
+			double prev_lati = 0;
+			double prev_longi = 0;
 			while (rs.next()) {
-				location = new Location();
+				Location location = new Location();
 				location.setId(rs.getInt("vid"));
 				location.setLati(rs.getFloat("lati"));
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
 				location.setTimestamp(rs.getInt("timestamp"));
+				if (prev_lati == 0 & prev_longi == 0)
+				{location.setDistanceFromLast(0);}
+				else{
 				location.setDistanceFromLast(
 						location.calcDistance(prev_lati, prev_longi));
-				cumulative_distance += location.getDistanceFromLast();
+				cumulative_distance += location.getDistanceFromLast();}
 				prev_lati = rs.getFloat("lati");
 				prev_longi = rs.getFloat("longi");
 				location.setCumulativeDistance(cumulative_distance);
@@ -123,7 +117,10 @@ public class LocationDB {
 			pstmt.setLong(1, id);
 			pstmt.setInt(2, hop_count);
 			ResultSet rs = pstmt.executeQuery();
+			double cumulative_distance = 0;
 			List<Location> locations = new ArrayList<Location>();
+			double prev_lati = 0;
+			double prev_longi = 0;
 			while (rs.next()) {
 				Location location = new Location();
 				location.setId(rs.getInt("vid"));
@@ -131,6 +128,15 @@ public class LocationDB {
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
 				location.setTimestamp(rs.getInt("timestamp"));
+				if (prev_lati == 0 & prev_longi == 0)
+				{location.setDistanceFromLast(0);}
+				else{
+				location.setDistanceFromLast(
+						location.calcDistance(prev_lati, prev_longi));
+				cumulative_distance += location.getDistanceFromLast();}
+				prev_lati = rs.getFloat("lati");
+				prev_longi = rs.getFloat("longi");
+				location.setCumulativeDistance(cumulative_distance);
 				locations.add(location);
 			}
 			return locations;
