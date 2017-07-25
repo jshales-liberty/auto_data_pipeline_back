@@ -10,9 +10,7 @@ public class Location {
 	private int status;
 	private int timestamp;
 	private double distanceFromLast;
-	private int dow;
-	private int hour;
-	private int status_total;
+
 
 	@Override
 	public String toString() {
@@ -20,11 +18,7 @@ public class Location {
 				+ ", status=" + status + ", timestamp=" + timestamp + "]";
 	}
 	
-	public Location(int dow, int status_total) {
-		this.dow=dow;
-		this.status_total = status_total;
-		
-	}
+
 
 	public Location() {
 	}
@@ -90,29 +84,6 @@ public class Location {
 		this.distanceFromLast = distanceFromLast;
 	}
 
-	public int getDow() {
-		return dow;
-	}
-
-	public void setDow(int dow) {
-		this.dow = dow;
-	}
-
-	public int getHour() {
-		return hour;
-	}
-
-	public void setHour(int hour) {
-		this.hour = hour;
-	}
-
-	public int getStatus_total() {
-		return status_total;
-	}
-
-	public void setStatus_total(int status_total) {
-		this.status_total = status_total;
-	}
 
 
 	

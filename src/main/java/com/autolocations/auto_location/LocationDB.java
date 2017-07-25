@@ -122,47 +122,47 @@ public class LocationDB {
 
 	}
 	
-	public static List<Location> getDOWbyId(int id)
-			throws URISyntaxException, SQLException {
-		try (Connection conn = getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(
-						"SELECT extract('dow' from to_timestamp(timestamp)) AS dow, sum(status) AS status_total "
-						+ "FROM vehlocation where vid = ? "
-						+ "GROUP BY 1 ORDER BY 1;");) {
-			pstmt.setLong(1, id);
-			ResultSet rs = pstmt.executeQuery();
-			List<Location> dowdata = new ArrayList<Location>();
-			while (rs.next()) {
-				Location dow = new Location();
-				dow.setDow(rs.getInt("dow"));
-				dow.setStatus_total(rs.getInt("status_total"));
-				dowdata.add(dow);
-			}
-			return dowdata;
-		}
-
-	}
-	
-	public static List<Location> getHODbyId(int id)
-			throws URISyntaxException, SQLException {
-		try (Connection conn = getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(
-						"SELECT extract('hour' from to_timestamp(timestamp)) AS hour, sum(status) AS status_total "
-						+ "FROM vehlocation where vid = ? "
-						+ "GROUP BY 1 ORDER BY 1;");) {
-			pstmt.setLong(1, id);
-			ResultSet rs = pstmt.executeQuery();
-			List<Location> hoddata = new ArrayList<Location>();
-			while (rs.next()) {
-				Location hod = new Location();
-				hod.setDow(rs.getInt("hour"));
-				hod.setStatus_total(rs.getInt("status_total"));
-				hoddata.add(hod);
-			}
-			return hoddata;
-		}
-
-	}
+//	public static List<Location> getDOWbyId(int id)
+//			throws URISyntaxException, SQLException {
+//		try (Connection conn = getConnection();
+//				PreparedStatement pstmt = conn.prepareStatement(
+//						"SELECT extract('dow' from to_timestamp(timestamp)) AS dow, sum(status) AS status_total "
+//						+ "FROM vehlocation where vid = ? "
+//						+ "GROUP BY 1 ORDER BY 1;");) {
+//			pstmt.setLong(1, id);
+//			ResultSet rs = pstmt.executeQuery();
+//			List<Location> dowdata = new ArrayList<Location>();
+//			while (rs.next()) {
+//				Location dow = new Location();
+//				dow.setDow(rs.getInt("dow"));
+//				dow.setStatus_total(rs.getInt("status_total"));
+//				dowdata.add(dow);
+//			}
+//			return dowdata;
+//		}
+//
+//	}
+//	
+//	public static List<Location> getHODbyId(int id)
+//			throws URISyntaxException, SQLException {
+//		try (Connection conn = getConnection();
+//				PreparedStatement pstmt = conn.prepareStatement(
+//						"SELECT extract('hour' from to_timestamp(timestamp)) AS hour, sum(status) AS status_total "
+//						+ "FROM vehlocation where vid = ? "
+//						+ "GROUP BY 1 ORDER BY 1;");) {
+//			pstmt.setLong(1, id);
+//			ResultSet rs = pstmt.executeQuery();
+//			List<Location> hoddata = new ArrayList<Location>();
+//			while (rs.next()) {
+//				Location hod = new Location();
+//				hod.setHour(rs.getInt("hour"));
+//				hod.setStatus_total(rs.getInt("status_total"));
+//				hoddata.add(hod);
+//			}
+//			return hoddata;
+//		}
+//
+//	}
 	
 	public static void deleteVehLocations(int id) throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();

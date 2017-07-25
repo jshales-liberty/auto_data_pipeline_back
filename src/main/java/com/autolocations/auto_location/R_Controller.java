@@ -116,16 +116,12 @@ public void delDriver(@PathVariable(name = "id", required = true) int id) throws
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/getDOW/{id}", method = RequestMethod.GET)
-public List<Location> getDOWById(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
-	return LocationDB.getDOWbyId(id);
-	
-}
+public List<Summary> getDOWById(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
+	return SummaryDB.getDOWbyId(id);}
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/getHOD/{id}", method = RequestMethod.GET)
-public List<Location> getHODById(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
-	return LocationDB.getHODbyId(id);
-	
-}
+public List<Summary> getHODById(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
+	return SummaryDB.getHODbyId(id);}
 }
 
