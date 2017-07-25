@@ -97,7 +97,7 @@ public class R_Controller {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/driverinfo/{id}", method = RequestMethod.GET)
+	@RequestMapping(path = "/api/driverinfo/{vid}", method = RequestMethod.GET)
 	public Driver getADriver(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
 		return DriverDB.getDriverInfo(vid);
 		
@@ -109,7 +109,7 @@ public List<Driver> getAllDrivers() throws URISyntaxException, SQLException {
 	return DriverDB.getDriverInfo();}
 
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/api/driver/{id}", method = RequestMethod.DELETE)
+@RequestMapping(path = "/api/driver/{vid}", method = RequestMethod.DELETE)
 public void delDriver(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
 	DriverDB.deleteDriver(vid);
 	LocationDB.deleteVehLocations(vid);}
