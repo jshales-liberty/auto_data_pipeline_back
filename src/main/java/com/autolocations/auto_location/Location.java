@@ -14,7 +14,7 @@ public class Location {
 
 	@Override
 	public String toString() {
-		return "Location [id=" + vid + ", lati=" + lati + ", longi=" + longi
+		return "Location [vid=" + vid + ", lati=" + lati + ", longi=" + longi
 				+ ", status=" + status + ", timestamp=" + timestamp + "]";
 	}
 
