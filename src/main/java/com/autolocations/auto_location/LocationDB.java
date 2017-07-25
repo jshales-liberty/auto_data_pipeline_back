@@ -173,10 +173,10 @@ public class LocationDB {
 						ResultSet.CONCUR_UPDATABLE);) {
 			String sql_tweak = "timestamp < extract(epoch from now())";
 			if (startTime != 0) {
-				sql_tweak += " AND timestamp>=" + startTime;
+				sql_tweak += " AND timestamp>=" + Integer.toString(startTime);
 			}
 			if (endTime != 0) {
-				sql_tweak += " AND timestamp<=" + endTime;
+				sql_tweak += " AND timestamp<=" + Integer.toString(endTime);
 			}
 
 			pstmt.setString(1, sql_tweak);
