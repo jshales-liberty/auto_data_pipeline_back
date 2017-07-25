@@ -59,16 +59,30 @@ public class LocationDB {
 								+ "from vehlocation t1 where vid=? and timestamp < extract(epoch from now()) ORDER BY timestamp ASC;");) {
 			pstmt.setLong(1, id);
 			ResultSet rs = pstmt.executeQuery();
-			double prev_lati;
-			double prev_longi;
+			double cumulative_distance = 0;
 			List<Location> locations = new ArrayList<Location>();
+			rs.next();
+			Location location = new Location();
+			location.setId(rs.getInt("vid"));
+			location.setLati(rs.getFloat("lati"));
+			location.setLongi(rs.getFloat("longi"));
+			double prev_lati = rs.getFloat("lati");
+			double prev_longi = rs.getFloat("longi");
+			location.setStatus(rs.getInt("status"));
+			location.setTimestamp(rs.getInt("timestamp"));
+			location.setDistanceFromLast(0);
+			location.setCumulativeDistance(cumulative_distance);
 			while (rs.next()) {
-				Location location = new Location();
+				location = new Location();
 				location.setId(rs.getInt("vid"));
 				location.setLati(rs.getFloat("lati"));
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
 				location.setTimestamp(rs.getInt("timestamp"));
+				location.setDistanceFromLast(
+						location.calcDistance(prev_lati, prev_longi));
+				cumulative_distance += location.getDistanceFromLast();
+				location.setCumulativeDistance(cumulative_distance);
 				locations.add(location);
 			}
 			return locations;
@@ -121,50 +135,53 @@ public class LocationDB {
 		}
 
 	}
-	
-//	public static List<Location> getDOWbyId(int id)
-//			throws URISyntaxException, SQLException {
-//		try (Connection conn = getConnection();
-//				PreparedStatement pstmt = conn.prepareStatement(
-//						"SELECT extract('dow' from to_timestamp(timestamp)) AS dow, sum(status) AS status_total "
-//						+ "FROM vehlocation where vid = ? "
-//						+ "GROUP BY 1 ORDER BY 1;");) {
-//			pstmt.setLong(1, id);
-//			ResultSet rs = pstmt.executeQuery();
-//			List<Location> dowdata = new ArrayList<Location>();
-//			while (rs.next()) {
-//				Location dow = new Location();
-//				dow.setDow(rs.getInt("dow"));
-//				dow.setStatus_total(rs.getInt("status_total"));
-//				dowdata.add(dow);
-//			}
-//			return dowdata;
-//		}
-//
-//	}
-//	
-//	public static List<Location> getHODbyId(int id)
-//			throws URISyntaxException, SQLException {
-//		try (Connection conn = getConnection();
-//				PreparedStatement pstmt = conn.prepareStatement(
-//						"SELECT extract('hour' from to_timestamp(timestamp)) AS hour, sum(status) AS status_total "
-//						+ "FROM vehlocation where vid = ? "
-//						+ "GROUP BY 1 ORDER BY 1;");) {
-//			pstmt.setLong(1, id);
-//			ResultSet rs = pstmt.executeQuery();
-//			List<Location> hoddata = new ArrayList<Location>();
-//			while (rs.next()) {
-//				Location hod = new Location();
-//				hod.setHour(rs.getInt("hour"));
-//				hod.setStatus_total(rs.getInt("status_total"));
-//				hoddata.add(hod);
-//			}
-//			return hoddata;
-//		}
-//
-//	}
-	
-	public static void deleteVehLocations(int id) throws URISyntaxException, SQLException {
+
+	// public static List<Location> getDOWbyId(int id)
+	// throws URISyntaxException, SQLException {
+	// try (Connection conn = getConnection();
+	// PreparedStatement pstmt = conn.prepareStatement(
+	// "SELECT extract('dow' from to_timestamp(timestamp)) AS dow, sum(status)
+	// AS status_total "
+	// + "FROM vehlocation where vid = ? "
+	// + "GROUP BY 1 ORDER BY 1;");) {
+	// pstmt.setLong(1, id);
+	// ResultSet rs = pstmt.executeQuery();
+	// List<Location> dowdata = new ArrayList<Location>();
+	// while (rs.next()) {
+	// Location dow = new Location();
+	// dow.setDow(rs.getInt("dow"));
+	// dow.setStatus_total(rs.getInt("status_total"));
+	// dowdata.add(dow);
+	// }
+	// return dowdata;
+	// }
+	//
+	// }
+	//
+	// public static List<Location> getHODbyId(int id)
+	// throws URISyntaxException, SQLException {
+	// try (Connection conn = getConnection();
+	// PreparedStatement pstmt = conn.prepareStatement(
+	// "SELECT extract('hour' from to_timestamp(timestamp)) AS hour, sum(status)
+	// AS status_total "
+	// + "FROM vehlocation where vid = ? "
+	// + "GROUP BY 1 ORDER BY 1;");) {
+	// pstmt.setLong(1, id);
+	// ResultSet rs = pstmt.executeQuery();
+	// List<Location> hoddata = new ArrayList<Location>();
+	// while (rs.next()) {
+	// Location hod = new Location();
+	// hod.setHour(rs.getInt("hour"));
+	// hod.setStatus_total(rs.getInt("status_total"));
+	// hoddata.add(hod);
+	// }
+	// return hoddata;
+	// }
+	//
+	// }
+
+	public static void deleteVehLocations(int id)
+			throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
 				PreparedStatement pstmt_1 = conn.prepareStatement(
 						"Insert into vehlocation_reserve (vid, lati, longi, status, timestamp) "

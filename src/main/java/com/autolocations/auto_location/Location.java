@@ -10,15 +10,13 @@ public class Location {
 	private int status;
 	private int timestamp;
 	private double distanceFromLast;
-
+	private double cumulativeDistance;
 
 	@Override
 	public String toString() {
 		return "Location [id=" + id + ", lati=" + lati + ", longi=" + longi
 				+ ", status=" + status + ", timestamp=" + timestamp + "]";
 	}
-	
-
 
 	public Location() {
 	}
@@ -65,16 +63,15 @@ public class Location {
 		this.timestamp = timestamp;
 	}
 
-	public double calcDistance(double lati, double longi)
-	{
-	
-			  double p = 0.017453292519943295;    // Math.PI / 180
-			  double a = 0.5 - Math.cos((this.getLati() - lati) * p)/2 + 
-			          Math.cos(lati * p) * Math.cos(this.getLati() * p) * 
-			          (1 - Math.cos((this.getLongi() - longi) * p))/2;
+	public double calcDistance(double lati, double longi) {
 
-			  return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-			}
+		double p = 0.017453292519943295; // Math.PI / 180
+		double a = 0.5 - Math.cos((this.getLati() - lati) * p) / 2
+				+ Math.cos(lati * p) * Math.cos(this.getLati() * p)
+						* (1 - Math.cos((this.getLongi() - longi) * p)) / 2;
+
+		return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+	}
 
 	public double getDistanceFromLast() {
 		return distanceFromLast;
@@ -84,8 +81,12 @@ public class Location {
 		this.distanceFromLast = distanceFromLast;
 	}
 
+	public double getCumulativeDistance() {
+		return cumulativeDistance;
+	}
 
+	public void setCumulativeDistance(double cumulativeDistance) {
+		this.cumulativeDistance = cumulativeDistance;
+	}
 
-	
-	
 }
