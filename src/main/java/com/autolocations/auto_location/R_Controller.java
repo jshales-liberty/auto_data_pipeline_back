@@ -46,7 +46,7 @@ public class R_Controller {
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/routehistory/{id}/{hop_count}", method = RequestMethod.GET)
+	@RequestMapping(path = "/api/routehistory/{vid}/{hop_count}", method = RequestMethod.GET)
 	public List<Location> getHistLocs(
 			@PathVariable(name = "vid", required = true) int vid, @PathVariable(name = "hop_count", required = true) int hop_count)
 			throws URISyntaxException, SQLException {
