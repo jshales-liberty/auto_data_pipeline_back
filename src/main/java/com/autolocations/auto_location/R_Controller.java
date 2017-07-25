@@ -48,12 +48,12 @@ public class R_Controller {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/routehistory/{id}/{hop_count}", method = RequestMethod.GET)
 	public List<Location> getHistLocs(
-			@PathVariable(name = "id", required = true) int id, @PathVariable(name = "hop_count", required = true) int hop_count)
+			@PathVariable(name = "vid", required = true) int vid, @PathVariable(name = "hop_count", required = true) int hop_count)
 			throws URISyntaxException, SQLException {
 		if (hop_count != 0) {
-			return LocationDB.getHistoricalDataByVID(id, hop_count);
+			return LocationDB.getHistoricalDataByVID(vid, hop_count);
 		} else {
-			return LocationDB.getHistoricalDataByVID(id);
+			return LocationDB.getHistoricalDataByVID(vid);
 		}
 	}
 
@@ -74,12 +74,12 @@ public class R_Controller {
 		return UserDB.getUsers();
 	}
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/driver/{id}", method = RequestMethod.PUT)
-	@ResponseBody public Driver updateVehAndDriver(@PathVariable(name = "id", required = true) int id, @RequestBody Driver d) throws URISyntaxException, SQLException {
-		Driver existing = DriverDB.getDriverInfo(id);
+	@RequestMapping(path = "/api/driver/{vid}", method = RequestMethod.PUT)
+	@ResponseBody public Driver updateVehAndDriver(@PathVariable(name = "vid", required = true) int vid, @RequestBody Driver d) throws URISyntaxException, SQLException {
+		Driver existing = DriverDB.getDriverInfo(vid);
 		existing.merge(d);
 		DriverDB.updateDriver(existing);
-		return DriverDB.getDriverInfo(id);
+		return DriverDB.getDriverInfo(vid);
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -98,8 +98,8 @@ public class R_Controller {
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driverinfo/{id}", method = RequestMethod.GET)
-	public Driver getADriver(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
-		return DriverDB.getDriverInfo(id);
+	public Driver getADriver(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
+		return DriverDB.getDriverInfo(vid);
 		
 	
 	}
@@ -110,18 +110,18 @@ public List<Driver> getAllDrivers() throws URISyntaxException, SQLException {
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/driver/{id}", method = RequestMethod.DELETE)
-public void delDriver(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
-	DriverDB.deleteDriver(id);
-	LocationDB.deleteVehLocations(id);}
+public void delDriver(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
+	DriverDB.deleteDriver(vid);
+	LocationDB.deleteVehLocations(vid);}
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/sumbydow/{id}", method = RequestMethod.GET)
-public List<Summary> getDOWById(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
-	return SummaryDB.getDOWbyId(id);}
+public List<Summary> getDOWById(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
+	return SummaryDB.getDOWbyId(vid);}
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/sumbyhour/{id}", method = RequestMethod.GET)
-public List<Summary> getHODById(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
-	return SummaryDB.getHODbyId(id);}
+public List<Summary> getHODById(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
+	return SummaryDB.getHODbyId(vid);}
 }
 
