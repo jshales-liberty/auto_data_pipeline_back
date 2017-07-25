@@ -26,7 +26,7 @@ public class DriverDB {
 			return driver;
 		}
 	}
-	
+
 	public static List<Driver> getDriverInfo()
 			throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
@@ -38,7 +38,8 @@ public class DriverDB {
 				Driver driver = new Driver(rs.getInt("vid"),
 						rs.getString("driver_first_name"),
 						rs.getString("driver_last_name"),
-						rs.getString("vehicle_make"), rs.getString("vehicle_model"),
+						rs.getString("vehicle_make"),
+						rs.getString("vehicle_model"),
 						rs.getInt("vehicle_year"));
 				drivers.add(driver);
 			}
@@ -49,10 +50,10 @@ public class DriverDB {
 	public static void addDriver(Driver d)
 			throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(
-						"Insert into driver("
-						+ "vid, driver_first_name, driver_last_name, vehicle_year, vehicle_make, vehicle_model)"
-						+ " values (?,?,?,?,?,?);")) {
+				PreparedStatement pstmt = conn
+						.prepareStatement("Insert into driver("
+								+ "vid, driver_first_name, driver_last_name, vehicle_year, vehicle_make, vehicle_model)"
+								+ " values (?,?,?,?,?,?);")) {
 			pstmt.setLong(1, d.getVid());
 			pstmt.setString(2, d.getDriver_first_name());
 			pstmt.setString(3, d.getDriver_last_name());
@@ -60,16 +61,14 @@ public class DriverDB {
 			pstmt.setString(5, d.getVehicle_make());
 			pstmt.setString(6, d.getVehicle_model());
 			pstmt.executeUpdate();
-			
 
 		}
 	}
-	
+
 	public static void updateDriver(Driver d)
 			throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(
-						"Update driver "
+				PreparedStatement pstmt = conn.prepareStatement("Update driver "
 						+ "set driver_first_name = ?, driver_last_name = ?, vehicle_year = ?, vehicle_make = ?, vehicle_model = ?"
 						+ "where vid = ?;")) {
 			pstmt.setString(1, d.getDriver_first_name());
@@ -79,18 +78,17 @@ public class DriverDB {
 			pstmt.setString(5, d.getVehicle_model());
 			pstmt.setLong(6, d.getVid());
 			pstmt.executeUpdate();
-			
 
 		}
 	}
 
-	public static void deleteDriver(int vid) throws URISyntaxException, SQLException {
+	public static void deleteDriver(int vid)
+			throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"Delete from driver where vid = ?;")) {
 			pstmt.setInt(1, vid);
 			pstmt.executeUpdate();
-			
 
 		}
 	}
