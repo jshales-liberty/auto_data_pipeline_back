@@ -59,16 +59,30 @@ public class LocationDB {
 								+ "from vehlocation t1 where vid=? and timestamp < extract(epoch from now()) ORDER BY timestamp ASC;");) {
 			pstmt.setLong(1, id);
 			ResultSet rs = pstmt.executeQuery();
-			double prev_lati;
-			double prev_longi;
+			double cumulative_distance = 0;
 			List<Location> locations = new ArrayList<Location>();
+			rs.next();
+			Location location = new Location();
+			location.setId(rs.getInt("vid"));
+			location.setLati(rs.getFloat("lati"));
+			location.setLongi(rs.getFloat("longi"));
+			double prev_lati = rs.getFloat("lati");
+			double prev_longi = rs.getFloat("longi");
+			location.setStatus(rs.getInt("status"));
+			location.setTimestamp(rs.getInt("timestamp"));
+			location.setDistanceFromLast(0);
+			location.setCumulativeDistance(cumulative_distance);
 			while (rs.next()) {
-				Location location = new Location();
+				location = new Location();
 				location.setId(rs.getInt("vid"));
 				location.setLati(rs.getFloat("lati"));
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
 				location.setTimestamp(rs.getInt("timestamp"));
+				location.setDistanceFromLast(
+						location.calcDistance(prev_lati, prev_longi));
+				cumulative_distance += location.getDistanceFromLast();
+				location.setCumulativeDistance(cumulative_distance);
 				locations.add(location);
 			}
 			return locations;
@@ -121,8 +135,7 @@ public class LocationDB {
 		}
 
 	}
-	
-	
+
 	public static void deleteVehLocations(int id) throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
 				PreparedStatement pstmt_1 = conn.prepareStatement(
