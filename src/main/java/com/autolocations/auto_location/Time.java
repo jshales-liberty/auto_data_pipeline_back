@@ -6,6 +6,9 @@ public class Time {
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
+	public Time() {
+		super();
+	}
 	private int startTime;
 	private int endTime;
 	public int getStartTime() {
