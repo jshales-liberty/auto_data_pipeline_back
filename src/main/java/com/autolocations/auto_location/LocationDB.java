@@ -162,8 +162,7 @@ public class LocationDB {
 
 	}
 
-	public static List<Location> getCumulativeDistancesForAll(int startTime,
-			int endTime) throws URISyntaxException, SQLException {
+	public static List<Location> getCumulativeDistancesForAll(Time t) throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
@@ -171,6 +170,8 @@ public class LocationDB {
 								+ "ORDER BY vid, timestamp ASC;");){
 						//ResultSet.TYPE_SCROLL_INSENSITIVE,
 						//ResultSet.CONCUR_UPDATABLE);) {
+			int startTime = t.getStartTime();
+			int endTime = t.getEndTime();
 			String sql_tweak = "timestamp < extract(epoch from now())";
 			if (startTime != 0) {
 				sql_tweak += " AND timestamp>=";
