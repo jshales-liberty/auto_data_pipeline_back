@@ -208,7 +208,6 @@ public class LocationDB {
 				location.setVid(rs.getInt("vid"));
 				location.setLati(rs.getFloat("lati"));
 				location.setLongi(rs.getFloat("longi"));
-				location.setTimestamp(rs.getInt("timestamp"));
 				if (prev_lati == 0 & prev_longi == 0) {
 					location.setDistanceFromLast(0);
 				} else {
