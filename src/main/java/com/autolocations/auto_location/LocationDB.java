@@ -169,9 +169,9 @@ public class LocationDB {
 				PreparedStatement pstmt = conn.prepareStatement(
 						"Select t1.Lati, t1.Longi, t1.vid "
 								+ "from vehlocation t1 where timestamp >= ? and timestamp <= ? "
-								+ "ORDER BY vid, timestamp ASC;");) {
-			// ResultSet.TYPE_SCROLL_INSENSITIVE,
-			// ResultSet.CONCUR_UPDATABLE);) {
+								+ "ORDER BY vid, timestamp ASC;",
+						ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_UPDATABLE);) {
 			int startTime = t.getStartTime();
 			int endTime = t.getEndTime();
 			if (startTime != 0) {
@@ -192,7 +192,7 @@ public class LocationDB {
 			double prev_longi = 0;
 			double cumulative_distance = 0;
 			rs.next();
-			//int prev_vid = 0;
+			// int prev_vid = 0;
 			int prev_vid = rs.getInt("vid");
 			rs.first();
 			Location location = new Location();
@@ -219,6 +219,7 @@ public class LocationDB {
 				prev_longi = rs.getFloat("longi");
 				location.setCumulativeDistance(cumulative_distance);
 			}
+			locations.add(location);
 			return locations;
 		}
 	}
