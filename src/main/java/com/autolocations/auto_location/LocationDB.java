@@ -166,7 +166,7 @@ public class LocationDB {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
-								+ "from vehlocation t1 where timestamp < extract(epoch from now()) "
+								+ "from vehlocation t1 where ? "
 								+ "ORDER BY vid, timestamp ASC;");){
 						//ResultSet.TYPE_SCROLL_INSENSITIVE,
 						//ResultSet.CONCUR_UPDATABLE);) {
@@ -182,7 +182,7 @@ public class LocationDB {
 				sql_tweak += Integer.toString(endTime);
 			}
 
-			//pstmt.setString(1, sql_tweak);
+			pstmt.setString(1, sql_tweak);
 			ResultSet rs = pstmt.executeQuery();
 			List<Location> locations = new ArrayList<Location>();
 			double prev_lati = 0;
