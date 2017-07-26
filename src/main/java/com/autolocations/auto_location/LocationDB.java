@@ -167,16 +167,18 @@ public class LocationDB {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
-								+ "from vehlocation t1 where ?) "
+								+ "from vehlocation t1 where ?;) "
 								+ "ORDER BY vid, timestamp ASC",
 						ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_UPDATABLE);) {
 			String sql_tweak = "timestamp < extract(epoch from now())";
 			if (startTime != 0) {
-				sql_tweak += " AND timestamp>=" + Integer.toString(startTime);
+				sql_tweak += " AND timestamp>=";
+				sql_tweak += Integer.toString(startTime);
 			}
 			if (endTime != 0) {
-				sql_tweak += " AND timestamp<=" + Integer.toString(endTime);
+				sql_tweak += " AND timestamp<=";
+				sql_tweak +=Integer.toString(endTime);
 			}
 
 			pstmt.setString(1, sql_tweak);
