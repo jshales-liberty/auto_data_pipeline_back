@@ -46,4 +46,5 @@ public int getStatus_total() {
 public void setStatus_total(int status_total) {
 	this.status_total = status_total;
 }
+
 }

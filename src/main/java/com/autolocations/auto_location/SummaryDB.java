@@ -19,6 +19,20 @@ public class SummaryDB {
 		return DriverManager.getConnection(dbUrl);
 	}
 	
+	public static int getMinTimestamp(int id)
+			throws URISyntaxException, SQLException {
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"select min(timestamp) as mintimestamp "
+						+ "from vehlocation "
+						+"where vid = ?;");) {
+			pstmt.setLong(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			rs.next();
+			return rs.getInt("mintimestamp");
+		}
+	}
+	
 	public static List<Summary> getDOWbyId(int id)
 			throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
