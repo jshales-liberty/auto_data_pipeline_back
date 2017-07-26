@@ -127,26 +127,30 @@ public class R_Controller {
 		DriverDB.deleteDriver(vid);
 		LocationDB.deleteVehLocations(vid);
 	}
-
-	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.GET)
-	public List<Summary> getDOWById(
-			@PathVariable(name = "vid", required = true) int vid)
-			throws URISyntaxException, SQLException {
-		return SummaryDB.getDOWbyId(vid);
-	}
-
-	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/sumbyhour/{vid}", method = RequestMethod.GET)
-	public List<Summary> getHODById(
-			@PathVariable(name = "vid", required = true) int vid)
-			throws URISyntaxException, SQLException {
-		return SummaryDB.getHODbyId(vid);
-	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driver/routehistory", method = RequestMethod.POST)
 	@ResponseBody public List<Location> getCumulativeDistances(@RequestBody Time t) throws URISyntaxException, SQLException {
 		return LocationDB.getCumulativeDistancesForAll(t);
 	}
+
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.GET)
+public List<Summary> getDOWById(@PathVariable(name = "vid", required = true) int id) throws URISyntaxException, SQLException {
+	if (id != 0) {
+		return SummaryDB.getDOWbyId(id);
+	} else {
+		return SummaryDB.getDOWbyId();
+	}
+}
+
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(path = "/api/sumbyhour/{vid}", method = RequestMethod.GET)
+public List<Summary> getHODById(@PathVariable(name = "vid", required = true) int id) throws URISyntaxException, SQLException {
+	if (id != 0) {
+		return SummaryDB.getHODbyId(id);
+	} else {
+		return SummaryDB.getHODbyId();
+	}
+}
 }

@@ -31,7 +31,26 @@ public class SummaryDB {
 			List<Summary> dowdata = new ArrayList<Summary>();
 			while (rs.next()) {
 				Summary dow = new Summary();
-//				dow.setDow(rs.getInt("dow"));
+				dow.setDow(DayOfWeek.values()[rs.getInt("dow")]);
+				dow.setStatus_total(rs.getInt("status_total"));
+				dowdata.add(dow);
+			}
+			return dowdata;
+		}
+
+	}
+	
+	public static List<Summary> getDOWbyId()
+			throws URISyntaxException, SQLException {
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"SELECT extract('dow' from to_timestamp(timestamp)) AS dow, sum(status) AS status_total "
+						+ "FROM vehlocation where timestamp < extract(epoch from now())"
+						+ "GROUP BY 1 ORDER BY 1;");) {
+			ResultSet rs = pstmt.executeQuery();
+			List<Summary> dowdata = new ArrayList<Summary>();
+			while (rs.next()) {
+				Summary dow = new Summary();
 				dow.setDow(DayOfWeek.values()[rs.getInt("dow")]);
 				dow.setStatus_total(rs.getInt("status_total"));
 				dowdata.add(dow);
@@ -49,6 +68,26 @@ public class SummaryDB {
 						+ "FROM vehlocation where vid = ? and timestamp < extract(epoch from now())"
 						+ "GROUP BY 1 ORDER BY 1;");) {
 			pstmt.setLong(1, id);
+			ResultSet rs = pstmt.executeQuery();
+			List<Summary> hoddata = new ArrayList<Summary>();
+			while (rs.next()) {
+				Summary hod = new Summary();
+				hod.setHour(rs.getInt("hour"));
+				hod.setStatus_total(rs.getInt("status_total"));
+				hoddata.add(hod);
+			}
+			return hoddata;
+		}
+
+	}
+	
+	public static List<Summary> getHODbyId()
+			throws URISyntaxException, SQLException {
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"SELECT extract('hour' from to_timestamp(timestamp)) AS hour, sum(status) AS status_total "
+						+ "FROM vehlocation where timestamp < extract(epoch from now())"
+						+ "GROUP BY 1 ORDER BY 1;");) {
 			ResultSet rs = pstmt.executeQuery();
 			List<Summary> hoddata = new ArrayList<Summary>();
 			while (rs.next()) {
