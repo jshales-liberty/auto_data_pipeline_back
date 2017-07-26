@@ -167,8 +167,8 @@ public class LocationDB {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
-								+ "from vehlocation t1 where ?; "
-								+ "ORDER BY vid, timestamp ASC",
+								+ "from vehlocation t1 where ? "
+								+ "ORDER BY vid, timestamp ASC;",
 						ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_UPDATABLE
 						);) {
