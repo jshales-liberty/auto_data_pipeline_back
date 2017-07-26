@@ -191,10 +191,10 @@ public class LocationDB {
 			double prev_lati = 0;
 			double prev_longi = 0;
 			double cumulative_distance = 0;
-			// rs.next();
-			int prev_vid = 0;
-			// int prev_vid = rs.getInt("vid");
-			// rs.first();
+			rs.next();
+			//int prev_vid = 0;
+			int prev_vid = rs.getInt("vid");
+			rs.first();
 			Location location = new Location();
 			while (rs.next()) {
 				if (prev_vid != rs.getInt("vid")) {
