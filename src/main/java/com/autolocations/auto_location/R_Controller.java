@@ -117,11 +117,20 @@ public void delDriver(@PathVariable(name = "id", required = true) int id) throws
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/sumbydow/{id}", method = RequestMethod.GET)
 public List<Summary> getDOWById(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
-	return SummaryDB.getDOWbyId(id);}
+	if (id != 0) {
+		return SummaryDB.getDOWbyId(id);
+	} else {
+		return SummaryDB.getDOWbyId();
+	}
+}
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/sumbyhour/{id}", method = RequestMethod.GET)
 public List<Summary> getHODById(@PathVariable(name = "id", required = true) int id) throws URISyntaxException, SQLException {
-	return SummaryDB.getHODbyId(id);}
+	if (id != 0) {
+		return SummaryDB.getHODbyId(id);
+	} else {
+		return SummaryDB.getHODbyId();
+	}
 }
-
+}
