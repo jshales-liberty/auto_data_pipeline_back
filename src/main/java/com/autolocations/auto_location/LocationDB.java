@@ -189,7 +189,7 @@ public class LocationDB {
 			double cumulative_distance = 0;
 			rs.next();
 			int prev_vid = rs.getInt("vid");
-			rs.previous();
+			rs.first();
 			Location location = null;
 			while (rs.next()) {
 				if (prev_vid != rs.getInt("vid")) {
