@@ -39,7 +39,7 @@ public class LocationDB {
 			List<Location> locations = new ArrayList<Location>();
 			while (rs.next()) {
 				Location location = new Location();
-				location.setId(rs.getInt("vid"));
+				location.setVid(rs.getInt("vid"));
 				location.setLati(rs.getFloat("lati"));
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
@@ -51,37 +51,34 @@ public class LocationDB {
 
 	}
 
-	public static List<Location> getHistoricalDataByVID(int id)
+	public static List<Location> getHistoricalDataByVID(int vid)
 			throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
 								+ "from vehlocation t1 where vid=? and timestamp < extract(epoch from now()) ORDER BY timestamp ASC;");) {
-			pstmt.setLong(1, id);
+			pstmt.setLong(1, vid);
 			ResultSet rs = pstmt.executeQuery();
 			double cumulative_distance = 0;
 			List<Location> locations = new ArrayList<Location>();
-			rs.next();
-			Location location = new Location();
-			location.setId(rs.getInt("vid"));
-			location.setLati(rs.getFloat("lati"));
-			location.setLongi(rs.getFloat("longi"));
-			double prev_lati = rs.getFloat("lati");
-			double prev_longi = rs.getFloat("longi");
-			location.setStatus(rs.getInt("status"));
-			location.setTimestamp(rs.getInt("timestamp"));
-			location.setDistanceFromLast(0);
-			location.setCumulativeDistance(cumulative_distance);
+			double prev_lati = 0;
+			double prev_longi = 0;
 			while (rs.next()) {
-				location = new Location();
-				location.setId(rs.getInt("vid"));
+				Location location = new Location();
+				location.setVid(rs.getInt("vid"));
 				location.setLati(rs.getFloat("lati"));
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
 				location.setTimestamp(rs.getInt("timestamp"));
-				location.setDistanceFromLast(
-						location.calcDistance(prev_lati, prev_longi));
-				cumulative_distance += location.getDistanceFromLast();
+				if (prev_lati == 0 & prev_longi == 0) {
+					location.setDistanceFromLast(0);
+				} else {
+					location.setDistanceFromLast(
+							location.calcDistance(prev_lati, prev_longi));
+					cumulative_distance += location.getDistanceFromLast();
+				}
+				prev_lati = rs.getFloat("lati");
+				prev_longi = rs.getFloat("longi");
 				location.setCumulativeDistance(cumulative_distance);
 				locations.add(location);
 			}
@@ -111,24 +108,37 @@ public class LocationDB {
 
 	}
 
-	public static List<Location> getHistoricalDataByVID(int id, int hop_count)
+	public static List<Location> getHistoricalDataByVID(int vid, int hop_count)
 			throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
 								+ "from vehlocation t1 where vid=? and timestamp < extract(epoch from now()) "
 								+ "ORDER BY timestamp ASC limit ?;");) {
-			pstmt.setLong(1, id);
+			pstmt.setLong(1, vid);
 			pstmt.setInt(2, hop_count);
 			ResultSet rs = pstmt.executeQuery();
+			double cumulative_distance = 0;
 			List<Location> locations = new ArrayList<Location>();
+			double prev_lati = 0;
+			double prev_longi = 0;
 			while (rs.next()) {
 				Location location = new Location();
-				location.setId(rs.getInt("vid"));
+				location.setVid(rs.getInt("vid"));
 				location.setLati(rs.getFloat("lati"));
 				location.setLongi(rs.getFloat("longi"));
 				location.setStatus(rs.getInt("status"));
 				location.setTimestamp(rs.getInt("timestamp"));
+				if (prev_lati == 0 & prev_longi == 0) {
+					location.setDistanceFromLast(0);
+				} else {
+					location.setDistanceFromLast(
+							location.calcDistance(prev_lati, prev_longi));
+					cumulative_distance += location.getDistanceFromLast();
+				}
+				prev_lati = rs.getFloat("lati");
+				prev_longi = rs.getFloat("longi");
+				location.setCumulativeDistance(cumulative_distance);
 				locations.add(location);
 			}
 			return locations;
@@ -136,7 +146,8 @@ public class LocationDB {
 
 	}
 
-	public static void deleteVehLocations(int id) throws URISyntaxException, SQLException {
+	public static void deleteVehLocations(int vid)
+			throws URISyntaxException, SQLException {
 		try (Connection conn = LocationDB.getConnection();
 				PreparedStatement pstmt_1 = conn.prepareStatement(
 						"Insert into vehlocation_reserve (vid, lati, longi, status, timestamp) "
@@ -144,10 +155,65 @@ public class LocationDB {
 								+ "Delete From vehlocation where vid = ?;"))
 
 		{
-			pstmt_1.setInt(1, id);
-			pstmt_1.setInt(2, id);
+			pstmt_1.setInt(1, vid);
+			pstmt_1.setInt(2, vid);
 			pstmt_1.executeUpdate();
 		}
 
+	}
+
+	public static List<Location> getCumulativeDistancesForAll(int startTime, int endTime)
+			throws URISyntaxException, SQLException {
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
+								+ "from vehlocation t1 where ?) "
+								+ "ORDER BY vid, timestamp ASC",
+						ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_UPDATABLE);) {
+			String sql_tweak = "timestamp < extract(epoch from now())";
+			if (startTime != 0) {
+				sql_tweak += " AND timestamp>=" + Integer.toString(startTime);
+			}
+			if (endTime != 0) {
+				sql_tweak += " AND timestamp<=" + Integer.toString(endTime);
+			}
+
+			pstmt.setString(1, sql_tweak);
+			ResultSet rs = pstmt.executeQuery();
+			List<Location> locations = new ArrayList<Location>();
+			double prev_lati = 0;
+			double prev_longi = 0;
+			double cumulative_distance = 0;
+			rs.next();
+			int prev_vid = rs.getInt("vid");
+			rs.previous();
+			Location location = null;
+			while (rs.next()) {
+				if (prev_vid != rs.getInt("vid")) {
+					locations.add(location);
+					prev_lati = 0;
+					prev_longi=0;
+					cumulative_distance = 0;
+				}
+				location = new Location();
+				location.setVid(rs.getInt("vid"));
+				location.setLati(rs.getFloat("lati"));
+				location.setLongi(rs.getFloat("longi"));
+				location.setTimestamp(rs.getInt("timestamp"));
+				if (prev_lati == 0 & prev_longi == 0) {
+					location.setDistanceFromLast(0);
+				} else {
+					location.setDistanceFromLast(
+							location.calcDistance(prev_lati, prev_longi));
+					cumulative_distance += location.getDistanceFromLast();
+				}
+				prev_lati = rs.getFloat("lati");
+				prev_longi = rs.getFloat("longi");
+				location.setCumulativeDistance(cumulative_distance);
+				locations.add(location);
+			}
+			return locations;
+		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.autolocations.auto_location;
 
-import com.google.gson.annotations.SerializedName;
+//import com.google.gson.annotations.SerializedName;
 
 public class Location {
 	// @SerializedName("lat")
@@ -14,21 +14,22 @@ public class Location {
 
 	@Override
 	public String toString() {
-		return "Location [id=" + id + ", lati=" + lati + ", longi=" + longi
+		return "Location [vid=" + vid + ", lati=" + lati + ", longi=" + longi
 				+ ", status=" + status + ", timestamp=" + timestamp + "]";
 	}
 
 	public Location() {
 	}
 
-	private int id;
+	// @SerializedName("id")
+	private int vid;
 
-	public int getId() {
-		return id;
+	public int getVid() {
+		return vid;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setVid(int vid) {
+		this.vid = vid;
 	}
 
 	public float getLati() {

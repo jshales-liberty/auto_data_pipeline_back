@@ -21,7 +21,8 @@ public class AppUser {
 
 	@Override
 	public String toString() {
-		return "AppUser [id=" + id + ", email=" + email + ", password_hash=" + password_hash + "]";
+		return "AppUser [id=" + id + ", email=" + email + ", password_hash="
+				+ password_hash + "]";
 	}
 
 	public void setId(int id) {
