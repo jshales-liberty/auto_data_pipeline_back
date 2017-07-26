@@ -167,7 +167,7 @@ public class LocationDB {
 			throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
-						"Select t1.Lati, t1.Longi, t1.vid"
+						"Select t1.Lati, t1.Longi, t1.vid "
 								+ "from vehlocation t1 where timestamp >= ? and timestamp <= ? "
 								+ "ORDER BY vid, timestamp ASC;");) {
 			// ResultSet.TYPE_SCROLL_INSENSITIVE,
