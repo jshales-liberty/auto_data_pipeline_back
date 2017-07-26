@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,35 +163,37 @@ public class LocationDB {
 
 	}
 
-	public static List<Location> getCumulativeDistancesForAll(Time t) throws URISyntaxException, SQLException {
+	public static List<Location> getCumulativeDistancesForAll(Time t)
+			throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
-								+ "from vehlocation t1 where ? "
-								+ " ORDER BY vid, timestamp ASC;");){
-						//ResultSet.TYPE_SCROLL_INSENSITIVE,
-						//ResultSet.CONCUR_UPDATABLE);) {
+								+ "from vehlocation t1 where timestamp >= ? and timestamp <= ? "
+								+ "ORDER BY vid, timestamp ASC;");) {
+			// ResultSet.TYPE_SCROLL_INSENSITIVE,
+			// ResultSet.CONCUR_UPDATABLE);) {
 			int startTime = t.getStartTime();
 			int endTime = t.getEndTime();
-			String sql_tweak = "timestamp < extract(epoch from now())";
 			if (startTime != 0) {
-				sql_tweak += " AND timestamp>=";
-				sql_tweak += Integer.toString(startTime);
+				pstmt.setInt(1, startTime);
+			} else {
+				pstmt.setInt(1, 0);
 			}
 			if (endTime != 0) {
-				sql_tweak += " AND timestamp<=";
-				sql_tweak += Integer.toString(endTime);
+				pstmt.setInt(2, endTime);
+				;
+			} else {
+				pstmt.setLong(2, Instant.now().getEpochSecond());
+				;
 			}
-
-			pstmt.setString(1, sql_tweak);
 			ResultSet rs = pstmt.executeQuery();
 			List<Location> locations = new ArrayList<Location>();
 			double prev_lati = 0;
 			double prev_longi = 0;
 			double cumulative_distance = 0;
-			//rs.next();
+			// rs.next();
 			int prev_vid = 0;
-			//int prev_vid = rs.getInt("vid");
+			// int prev_vid = rs.getInt("vid");
 			// rs.first();
 			Location location = new Location();
 			while (rs.next()) {
