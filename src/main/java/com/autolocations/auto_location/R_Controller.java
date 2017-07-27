@@ -140,7 +140,9 @@ public class R_Controller {
 		for (Location l : locations) {
 			total_distance += l.getCumulativeDistance();
 		}
-		return total_distance/(daysbetween* locations.size());
+		return total_distance
+				///(daysbetween* locations.size())
+				;
 	} 
 
 @CrossOrigin(origins = "http://localhost:4200")
