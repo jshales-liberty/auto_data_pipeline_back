@@ -17,6 +17,8 @@ public class Summary {
 	private int timestamp;
 	private int timestampBegin;
 	private int timestampEnd;
+	private int vid;
+	private int incidentsum;
 
 
 	public Summary(DayOfWeek dow, int hour, int status_total) {
@@ -26,6 +28,8 @@ public class Summary {
 		this.timestamp = timestamp;
 		this.timestampBegin = timestampBegin;
 		this.timestampEnd = timestampEnd;
+		this.vid = vid;
+		this.incidentsum = incidentsum;
 		
 	}
 	
@@ -82,6 +86,22 @@ public int getTimestampEnd() {
 
 public void setTimestampEnd(int timestampEnd) {
 	this.timestampEnd = timestampEnd;
+}
+
+public int getVid() {
+	return vid;
+}
+
+public void setVid(int vid) {
+	this.vid = vid;
+}
+
+public int getIncidentsum() {
+	return incidentsum;
+}
+
+public void setIncidentsum(int incidentsum) {
+	this.incidentsum = incidentsum;
 }
 
 }

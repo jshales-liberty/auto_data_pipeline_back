@@ -157,5 +157,12 @@ return total_distance / (t.getDiff() * locations.size());
 	}
 }
 
-
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(path = "/api/topfiveincidents/", method = RequestMethod.POST)
+@ResponseBody public List<Summary> getVehWithMostIncidents(@RequestBody Time t)
+		throws URISyntaxException, SQLException {
+		return SummaryDB.getVehWithMostIncidents(t.getStartTime(), t.getEndTime());
+	}
 }
+
+

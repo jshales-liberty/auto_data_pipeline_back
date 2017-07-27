@@ -99,6 +99,29 @@ public class SummaryDB {
 
 	}
 	
+	public static List<Summary> getVehWithMostIncidents(int timestampBegin, int timestampEnd)
+	throws URISyntaxException, SQLException {
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(
+						"select vid as vid, sum(incident) as incidentsum "
+						+ "from vehlocation where incident is not null and "
+						+ "timestamp < extract(epoch from now()) and "
+						+ "timestamp >= ? and timestamp <= ? "
+						+ "group by vid order by incidentsum desc limit 5;");) {
+			pstmt.setInt(1, timestampBegin);
+			pstmt.setInt(2, timestampEnd);
+			ResultSet rs = pstmt.executeQuery();
+			List<Summary> incidentData = new ArrayList<Summary>();
+			while (rs.next()) {
+				Summary incident = new Summary();
+				incident.setVid(rs.getInt("vid"));
+				incident.setIncidentsum(rs.getInt("incidentsum"));
+				incidentData.add(incident);
+			}
+			return incidentData;
+		}
+	}
+	
 //	public static List<Summary> getHODbyId(int id)
 //			throws URISyntaxException, SQLException {
 //		try (Connection conn = getConnection();
