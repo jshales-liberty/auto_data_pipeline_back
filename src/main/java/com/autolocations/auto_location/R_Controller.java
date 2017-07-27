@@ -139,7 +139,7 @@ public class R_Controller {
 		double total_distance = 0;
 		for (Location l : locations) {
 			if(l.getVid()==vid){
-				result[0]=(l.getCumulativeDistance()/(t.getDiff()*locations.size()));
+				result[0]=(l.getCumulativeDistance()/t.getDiff());
 			}
 			else {
 			total_distance += l.getCumulativeDistance();}
