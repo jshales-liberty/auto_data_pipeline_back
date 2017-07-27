@@ -133,7 +133,8 @@ public class R_Controller {
 	@ResponseBody public double getCumulativeDistances(@RequestBody Time t) throws URISyntaxException, SQLException {
 		List<Location> locations = LocationDB.getCumulativeDistancesForAll(t);
 		double total_distance = 0;
-		float daysbetween = t.getDiff();
+		float daysbetween = 1;
+				//t.getDiff();
 		locations.size();
 		//Location selected = new Location();
 		for (Location l : locations) {
