@@ -134,44 +134,46 @@ public class R_Controller {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driver/routehistory/{vid}", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Double> getCumulativeDistances(@PathVariable(name = "vid", required = true) int vid, @RequestBody Time t)
-			throws URISyntaxException, SQLException {
+	public Map<String, Double> getCumulativeDistances(
+			@PathVariable(name = "vid", required = true) int vid,
+			@RequestBody Time t) throws URISyntaxException, SQLException {
 		List<Location> locations = LocationDB.getCumulativeDistancesForAll(t);
 		double[] result = new double[2];
 		Map<String, Double> map = new HashMap<String, Double>();
 		double total_distance = 0;
 		for (Location l : locations) {
-			if(l.getVid()==vid){
-				result[0]=(l.getCumulativeDistance()/t.getDiff());
+			if (l.getVid() == vid) {
+				result[0] = (l.getCumulativeDistance() / t.getDiff());
 				map.put("vid_avg", result[0]);
+			} else {
+				total_distance += l.getCumulativeDistance();
 			}
-			else {
-			total_distance += l.getCumulativeDistance();}
 		}
 
 		result[1] = total_distance / (t.getDiff() * locations.size());
 		map.put("total_avg", result[1]);
 		return map;
-	} 
+	}
 
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.POST)
-@ResponseBody public List<Summary> getDOWById(@PathVariable(name = "vid", required = false) int vid,
-@RequestBody Time t)
-		throws URISyntaxException, SQLException {
-	if (vid != 0) {
-		return SummaryDB.getDOWbyId(vid, t.getStartTime(), t.getEndTime());
-	} else {
-		return SummaryDB.getDOWbyId(t.getStartTime(), t.getEndTime());
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Summary> getDOWById(
+			@PathVariable(name = "vid", required = false) int vid,
+			@RequestBody Time t) throws URISyntaxException, SQLException {
+		if (vid != 0) {
+			return SummaryDB.getDOWbyId(vid, t.getStartTime(), t.getEndTime());
+		} else {
+			return SummaryDB.getDOWbyId(t.getStartTime(), t.getEndTime());
+		}
+	}
+
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(path = "/api/topfiveincidents/", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Summary> getVehWithMostIncidents(@RequestBody Time t)
+			throws URISyntaxException, SQLException {
+		return SummaryDB.getVehWithMostIncidents(t.getStartTime(),
+				t.getEndTime());
 	}
 }
-
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/api/topfiveincidents/", method = RequestMethod.POST)
-@ResponseBody public List<Summary> getVehWithMostIncidents(@RequestBody Time t)
-		throws URISyntaxException, SQLException {
-		return SummaryDB.getVehWithMostIncidents(t.getStartTime(), t.getEndTime());
-	}
-}
-
-

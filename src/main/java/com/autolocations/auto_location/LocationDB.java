@@ -15,7 +15,7 @@ public class LocationDB {
 	public static Connection getConnection()
 			throws URISyntaxException, SQLException {
 		String dbUrl = System.getenv("HEROKU_POSTGRESQL_BROWN_JDBC_URL");
-		if (dbUrl == null){
+		if (dbUrl == null) {
 			try {
 				Class.forName("org.postgresql.Driver");
 			} catch (ClassNotFoundException e) {
