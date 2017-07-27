@@ -27,16 +27,6 @@ public class LocationDB {
 		return DriverManager.getConnection(dbUrl);
 	}
 
-	public static int testpull() throws URISyntaxException, SQLException {
-		try (Connection conn = getConnection();
-				PreparedStatement pstmt_validate = conn.prepareStatement(
-						"Select count(*) from vehlocation");) {
-			ResultSet rs = pstmt_validate.executeQuery();
-			rs.next();
-			return rs.getInt("count");
-		}
-	}
-
 	public static List<Location> getCurrentLocations()
 			throws URISyntaxException, SQLException {
 		try (Connection conn = getConnection();

@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 public class R_Controller {
+	@ApiOperation(value = "Test Data Route", notes = "This allows a test data connection (not from the PostGres database, but to a small local JSON file.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/testdata", method = RequestMethod.GET)
 	public Location[] grabdata() {
@@ -33,12 +36,6 @@ public class R_Controller {
 			e.printStackTrace();
 			return null;
 		}
-	}
-
-	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/testdata2", method = RequestMethod.GET)
-	public int grabtest() throws URISyntaxException, SQLException {
-		return LocationDB.testpull();
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -59,7 +56,7 @@ public class R_Controller {
 			return LocationDB.getHistoricalDataByVID(vid);
 		}
 	}
-
+	@ApiOperation(value = "Add a driver/vehicle to the database.", notes = "Add a driver and vehicle to the database and they will begin appearing on the map.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/addDriver", method = RequestMethod.POST)
 	@ResponseBody
@@ -71,13 +68,13 @@ public class R_Controller {
 		return gen_id;
 	}
 
+	@ApiOperation(value = "Get all users in the database.", notes = "This route probably wont exist in production.")
 	@CrossOrigin(origins = "http://localhost:4200")
-
 	@RequestMapping(path = "/api/user", method = RequestMethod.GET)
 	public List<AppUser> getUsers() throws URISyntaxException, SQLException {
 		return UserDB.getUsers();
 	}
-
+	@ApiOperation(value = "Use this to adjust a driver/vehicle.", notes = "Pass a vehicle ID into this route with any characteristics you want to change about that ID.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driver/{vid}", method = RequestMethod.PUT)
 	@ResponseBody
@@ -90,7 +87,7 @@ public class R_Controller {
 		DriverDB.updateDriver(existing);
 		return DriverDB.getDriverInfo(vid);
 	}
-
+	@ApiOperation(value = "Add a new user.", notes = "Pass a user object to the route to add them to the database.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/addUser", method = RequestMethod.POST)
 	@ResponseBody
