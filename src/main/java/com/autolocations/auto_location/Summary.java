@@ -15,6 +15,8 @@ public class Summary {
 	private int hour;
 	private int status_total;
 	private int timestamp;
+	private int timestampBegin;
+	private int timestampEnd;
 
 
 	public Summary(DayOfWeek dow, int hour, int status_total) {
@@ -22,6 +24,8 @@ public class Summary {
 		this.hour=hour;
 		this.status_total = status_total;
 		this.timestamp = timestamp;
+		this.timestampBegin = timestampBegin;
+		this.timestampEnd = timestampEnd;
 		
 	}
 	
@@ -62,6 +66,22 @@ public int getTimestamp() {
 
 public void setTimestamp(int timestamp) {
 	this.timestamp = timestamp;
+}
+
+public int getTimestampBegin() {
+	return timestampBegin;
+}
+
+public void setTimestampBegin(int timestampBegin) {
+	this.timestampBegin = timestampBegin;
+}
+
+public int getTimestampEnd() {
+	return timestampEnd;
+}
+
+public void setTimestampEnd(int timestampEnd) {
+	this.timestampEnd = timestampEnd;
 }
 
 }

@@ -144,31 +144,22 @@ public class R_Controller {
 			else {
 			total_distance += l.getCumulativeDistance();}
 		}
+
 		result[1] = total_distance / (t.getDiff() * locations.size());
 		return result;
-	}
+	} 
 
-	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.GET)
-	public List<Summary> getDOWById(
-			@PathVariable(name = "vid", required = true) int vid)
-			throws URISyntaxException, SQLException {
-		if (vid != 0) {
-			return SummaryDB.getDOWbyId(vid);
-		} else {
-			return SummaryDB.getDOWbyId();
-		}
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.POST)
+@ResponseBody public List<Summary> getDOWById(@PathVariable(name = "vid", required = false) int vid,
+@RequestBody Time t)
+		throws URISyntaxException, SQLException {
+	if (vid != 0) {
+		return SummaryDB.getDOWbyId(vid, t.getStartTime(), t.getEndTime());
+	} else {
+		return SummaryDB.getDOWbyId(t.getStartTime(), t.getEndTime());
 	}
+}
 
-	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/sumbyhour/{vid}", method = RequestMethod.GET)
-	public List<Summary> getHODById(
-			@PathVariable(name = "vid", required = true) int vid)
-			throws URISyntaxException, SQLException {
-		if (vid != 0) {
-			return SummaryDB.getHODbyId(vid);
-		} else {
-			return SummaryDB.getHODbyId();
-		}
-	}
+
 }
