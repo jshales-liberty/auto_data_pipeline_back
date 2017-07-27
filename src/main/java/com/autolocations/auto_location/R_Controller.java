@@ -81,7 +81,8 @@ public class R_Controller {
 	@ResponseBody
 	public Driver updateVehAndDriver(
 			@PathVariable(name = "vid", required = true) int vid,
-			@RequestBody Driver d) throws URISyntaxException, SQLException, ClassNotFoundException {
+			@RequestBody Driver d)
+			throws URISyntaxException, SQLException, ClassNotFoundException {
 		Driver existing = DriverDB.getDriverInfo(vid);
 		existing.merge(d);
 		DriverDB.updateDriver(existing);
@@ -127,41 +128,44 @@ public class R_Controller {
 		DriverDB.deleteDriver(vid);
 		LocationDB.deleteVehLocations(vid);
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driver/routehistory", method = RequestMethod.POST)
-	@ResponseBody public double getCumulativeDistances(@RequestBody Time t) throws URISyntaxException, SQLException {
+	@ResponseBody
+	public double getCumulativeDistances(@RequestBody Time t)
+			throws URISyntaxException, SQLException {
 		List<Location> locations = LocationDB.getCumulativeDistancesForAll(t);
 		double total_distance = 0;
-//		float daysbetween = t.getDiff();
+		// float daysbetween = t.getDiff();
 		locations.size();
-		//Location selected = new Location();
+		// Location selected = new Location();
 		for (Location l : locations) {
 			total_distance += l.getCumulativeDistance();
 		}
-		return
-				total_distance/
-				(t.getDiff()* locations.size())
-				;
-	} 
-
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.GET)
-public List<Summary> getDOWById(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
-	if (vid != 0) {
-		return SummaryDB.getDOWbyId(vid);
-	} else {
-		return SummaryDB.getDOWbyId();
+		return total_distance / (t.getDiff() * locations.size());
 	}
-}
 
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/api/sumbyhour/{vid}", method = RequestMethod.GET)
-public List<Summary> getHODById(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
-	if (vid != 0) {
-		return SummaryDB.getHODbyId(vid);
-	} else {
-		return SummaryDB.getHODbyId();
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.GET)
+	public List<Summary> getDOWById(
+			@PathVariable(name = "vid", required = true) int vid)
+			throws URISyntaxException, SQLException {
+		if (vid != 0) {
+			return SummaryDB.getDOWbyId(vid);
+		} else {
+			return SummaryDB.getDOWbyId();
+		}
 	}
-}
+
+	@CrossOrigin(origins = "http://localhost:4200")
+	@RequestMapping(path = "/api/sumbyhour/{vid}", method = RequestMethod.GET)
+	public List<Summary> getHODById(
+			@PathVariable(name = "vid", required = true) int vid)
+			throws URISyntaxException, SQLException {
+		if (vid != 0) {
+			return SummaryDB.getHODbyId(vid);
+		} else {
+			return SummaryDB.getHODbyId();
+		}
+	}
 }
