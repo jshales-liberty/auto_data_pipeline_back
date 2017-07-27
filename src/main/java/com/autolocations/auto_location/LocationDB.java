@@ -15,6 +15,15 @@ public class LocationDB {
 	public static Connection getConnection()
 			throws URISyntaxException, SQLException {
 		String dbUrl = System.getenv("HEROKU_POSTGRESQL_BROWN_JDBC_URL");
+		if (dbUrl == null){
+			try {
+				Class.forName("org.postgresql.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dbUrl = "jdbc:postgres://wempudndjjzqhz:5fc6adad0072b1b33c3d0bbfea149b1d94341ca2f6aab2a3a616e10dcbd866bc@ec2-54-163-254-143.compute-1.amazonaws.com:5432/db9bi9pe38ip8j";
+		}
 		return DriverManager.getConnection(dbUrl);
 	}
 

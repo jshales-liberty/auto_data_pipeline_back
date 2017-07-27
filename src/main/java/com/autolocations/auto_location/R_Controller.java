@@ -81,7 +81,7 @@ public class R_Controller {
 	@ResponseBody
 	public Driver updateVehAndDriver(
 			@PathVariable(name = "vid", required = true) int vid,
-			@RequestBody Driver d) throws URISyntaxException, SQLException {
+			@RequestBody Driver d) throws URISyntaxException, SQLException, ClassNotFoundException {
 		Driver existing = DriverDB.getDriverInfo(vid);
 		existing.merge(d);
 		DriverDB.updateDriver(existing);
@@ -108,7 +108,7 @@ public class R_Controller {
 	@RequestMapping(path = "/api/driverinfo/{vid}", method = RequestMethod.GET)
 	public Driver getADriver(
 			@PathVariable(name = "vid", required = true) int vid)
-			throws URISyntaxException, SQLException {
+			throws URISyntaxException, SQLException, ClassNotFoundException {
 		return DriverDB.getDriverInfo(vid);
 
 	}
@@ -140,7 +140,8 @@ public class R_Controller {
 		for (Location l : locations) {
 			total_distance += l.getCumulativeDistance();
 		}
-		return total_distance
+		return locations.size() 
+				//total_distance
 				///(daysbetween* locations.size())
 				;
 	} 

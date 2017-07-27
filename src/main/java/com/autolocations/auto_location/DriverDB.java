@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DriverDB {
 	public static Driver getDriverInfo(int vid)
-			throws URISyntaxException, SQLException {
+			throws URISyntaxException, SQLException, ClassNotFoundException {
 		try (Connection conn = LocationDB.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(
 						"Select * from driver where vid = ?;")) {
