@@ -147,9 +147,9 @@ public class R_Controller {
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.GET)
-public List<Summary> getDOWById(@PathVariable(name = "vid", required = true) int id) throws URISyntaxException, SQLException {
-	if (id != 0) {
-		return SummaryDB.getDOWbyId(id);
+public List<Summary> getDOWById(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
+	if (vid != 0) {
+		return SummaryDB.getDOWbyId(vid);
 	} else {
 		return SummaryDB.getDOWbyId();
 	}
@@ -157,9 +157,9 @@ public List<Summary> getDOWById(@PathVariable(name = "vid", required = true) int
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/sumbyhour/{vid}", method = RequestMethod.GET)
-public List<Summary> getHODById(@PathVariable(name = "vid", required = true) int id) throws URISyntaxException, SQLException {
-	if (id != 0) {
-		return SummaryDB.getHODbyId(id);
+public List<Summary> getHODById(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
+	if (vid != 0) {
+		return SummaryDB.getHODbyId(vid);
 	} else {
 		return SummaryDB.getHODbyId();
 	}

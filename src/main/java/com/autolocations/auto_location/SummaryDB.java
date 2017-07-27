@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,38 @@ public class SummaryDB {
 		String dbUrl = System.getenv("HEROKU_POSTGRESQL_BROWN_JDBC_URL");
 		return DriverManager.getConnection(dbUrl);
 	}
+	
+//	public static int minTimestamp(int vid)
+//			throws URISyntaxException, SQLException {
+//		try (Connection conn = getConnection();
+//				PreparedStatement pstmt = conn.prepareStatement(
+//						"select min(timestamp) as minTimestamp "
+//						+ "from vehlocation "
+//						+"where vid = ? and timestamp < extract(epoch from now());");) {
+//			pstmt.setLong(1, vid);
+//			ResultSet rs = pstmt.executeQuery();
+//			rs.next();
+//			return rs.getInt("minTimestamp");
+//		}
+//	}
+	
+//	public static ArrayList<Summary> allTimestamps(int vid)
+//			throws URISyntaxException, SQLException {
+//		try (Connection conn = getConnection();
+//				PreparedStatement pstmt = conn.prepareStatement(
+//						"select timestamp as timestamp "
+//						+ "from vehlocation "
+//						+"where vid = ? and timestamp < extract(epoch from now());");) {
+//			pstmt.setLong(1, vid);
+//			ResultSet rs = pstmt.executeQuery();
+//			ArrayList<Summary> summaries = new ArrayList<Summary>();
+//			while (rs.next()) {
+//				Summary summary = new Summary();
+//				summary.setTimestamp(rs.getInt("timestamp"));
+//				summaries.add(summary);
+//		} return summaries;
+//		}
+//	}	
 	
 	public static List<Summary> getDOWbyId(int id)
 			throws URISyntaxException, SQLException {
