@@ -4,7 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -130,19 +132,26 @@ public class R_Controller {
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/driver/routehistory", method = RequestMethod.POST)
+	@RequestMapping(path = "/api/driver/routehistory/{vid}", method = RequestMethod.POST)
 	@ResponseBody
-	public double getCumulativeDistances(@RequestBody Time t)
+	public Map<String, Double> getCumulativeDistances(@PathVariable(name = "vid", required = true) int vid, @RequestBody Time t)
 			throws URISyntaxException, SQLException {
 		List<Location> locations = LocationDB.getCumulativeDistancesForAll(t);
+		double[] result = new double[2];
+		Map<String, Double> map = new HashMap<String, Double>();
 		double total_distance = 0;
-		// float daysbetween = t.getDiff();
-		locations.size();
-		// Location selected = new Location();
 		for (Location l : locations) {
-			total_distance += l.getCumulativeDistance();
+			if(l.getVid()==vid){
+				result[0]=(l.getCumulativeDistance()/t.getDiff());
+				map.put("vid_avg", result[0]);
+			}
+			else {
+			total_distance += l.getCumulativeDistance();}
 		}
-return total_distance / (t.getDiff() * locations.size());
+
+		result[1] = total_distance / (t.getDiff() * locations.size());
+		map.put("total_avg", result[1]);
+		return map;
 	} 
 
 @CrossOrigin(origins = "http://localhost:4200")
