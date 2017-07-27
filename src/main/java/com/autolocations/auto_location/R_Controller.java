@@ -130,9 +130,9 @@ public class R_Controller {
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driver/routehistory", method = RequestMethod.POST)
-	@ResponseBody public float getCumulativeDistances(@RequestBody Time t) throws URISyntaxException, SQLException {
+	@ResponseBody public double getCumulativeDistances(@RequestBody Time t) throws URISyntaxException, SQLException {
 		List<Location> locations = LocationDB.getCumulativeDistancesForAll(t);
-		float total_distance = 0;
+		double total_distance = 0;
 		float daysbetween = t.getDiff();
 		locations.size();
 		//Location selected = new Location();
