@@ -154,7 +154,7 @@ return total_distance / (t.getDiff() * locations.size());
 		return SummaryDB.getDOWbyId(vid, t.getStartTime(), t.getEndTime());
 	} else {
 		return SummaryDB.getDOWbyId(t.getStartTime(), t.getEndTime());
-	};
+	}
 }
 
 
