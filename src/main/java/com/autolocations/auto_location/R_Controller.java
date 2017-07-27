@@ -130,19 +130,22 @@ public class R_Controller {
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/api/driver/routehistory", method = RequestMethod.POST)
+	@RequestMapping(path = "/api/driver/routehistory/{vid}", method = RequestMethod.POST)
 	@ResponseBody
-	public double getCumulativeDistances(@RequestBody Time t)
+	public double[] getCumulativeDistances(@PathVariable(name = "vid", required = true) int vid, @RequestBody Time t)
 			throws URISyntaxException, SQLException {
 		List<Location> locations = LocationDB.getCumulativeDistancesForAll(t);
+		double[] result = new double[2];
 		double total_distance = 0;
-		// float daysbetween = t.getDiff();
-		locations.size();
-		// Location selected = new Location();
 		for (Location l : locations) {
-			total_distance += l.getCumulativeDistance();
+			if(l.getVid()==vid){
+				result[0]=(l.getCumulativeDistance()/(t.getDiff()*locations.size()));
+			}
+			else {
+			total_distance += l.getCumulativeDistance();}
 		}
-		return total_distance / (t.getDiff() * locations.size());
+		result[1] = total_distance / (t.getDiff() * locations.size());
+		return result;
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
