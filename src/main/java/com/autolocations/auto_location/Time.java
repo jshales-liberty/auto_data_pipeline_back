@@ -24,8 +24,8 @@ public class Time {
 		this.endTime = endTime;
 	}
 	
-	public float getDiff(){
-		return (this.endTime - this.startTime)/86400;
+	public double getDiff(){
+		return (this.endTime - this.startTime)/86400.0;
 	}
 
 }
