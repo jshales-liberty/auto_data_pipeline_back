@@ -143,22 +143,25 @@ public class R_Controller {
 	} 
 
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.GET)
-public List<Summary> getDOWById(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
+@RequestMapping(path = "/api/sumbydow/{vid}/{timestampBegin}/{timestampEnd}", method = RequestMethod.GET)
+public List<Summary> getDOWById(@PathVariable(name = "vid", required = false) int vid,
+@PathVariable(name = "timestampBegin", required = true) int timestampBegin,
+@PathVariable(name = "timestampEnd", required = true) int timestampEnd) 
+		throws URISyntaxException, SQLException {
 	if (vid != 0) {
-		return SummaryDB.getDOWbyId(vid);
+		return SummaryDB.getDOWbyId(vid, timestampBegin, timestampEnd);
 	} else {
-		return SummaryDB.getDOWbyId();
+		return SummaryDB.getDOWbyId(timestampBegin, timestampEnd);
 	}
 }
 
-@CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/api/sumbyhour/{vid}", method = RequestMethod.GET)
-public List<Summary> getHODById(@PathVariable(name = "vid", required = true) int vid) throws URISyntaxException, SQLException {
-	if (vid != 0) {
-		return SummaryDB.getHODbyId(vid);
-	} else {
-		return SummaryDB.getHODbyId();
-	}
-}
+//@CrossOrigin(origins = "http://localhost:4200")
+//@RequestMapping(path = "/api/sumbyhour/{vid}", method = RequestMethod.GET)
+//public List<Summary> getHODById(@PathVariable(name = "vid", required = false) int vid) throws URISyntaxException, SQLException {
+//	if (vid != 0) {
+//		return SummaryDB.getHODbyId(vid);
+//	} else {
+//		return SummaryDB.getHODbyId();
+//	}
+//}
 }
