@@ -146,7 +146,7 @@ return total_distance / (t.getDiff() * locations.size());
 	} 
 
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping(path = "/api/sumbydow/{vid}/{timestampBegin}/{timestampEnd}", method = RequestMethod.POST)
+@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.POST)
 @ResponseBody public List<Summary> getDOWById(@PathVariable(name = "vid", required = false) int vid,
 @RequestBody Time t)
 		throws URISyntaxException, SQLException {
