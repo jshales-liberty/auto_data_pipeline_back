@@ -140,7 +140,7 @@ public class R_Controller {
 			total_distance += l.getCumulativeDistance();
 		}
 		return total_distance/(daysbetween* locations.size());
-	}
+	} 
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.GET)
