@@ -140,7 +140,7 @@ public class R_Controller {
 		for (Location l : locations) {
 			total_distance += l.getCumulativeDistance();
 		}
-		return locations.size() 
+		return t.getDiff() 
 				//total_distance
 				///(daysbetween* locations.size())
 				;
