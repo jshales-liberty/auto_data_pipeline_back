@@ -26,7 +26,7 @@ public class AutoLocationApplication {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
 				.apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.any())
+				.paths(PathSelectors.regex("/api.*"))
 				.build()
 				.apiInfo(api_updated)
 				.pathMapping("/");

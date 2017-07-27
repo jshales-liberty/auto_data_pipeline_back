@@ -95,7 +95,8 @@ public class R_Controller {
 			throws URISyntaxException, SQLException {
 		return UserDB.adduser(u);
 	}
-
+	@ApiOperation(value = "Validate a user.", notes = "This route confirms a user has entered the correct username and password, "
+			+ "and if so logs them in allowing access to the rest of the site.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/validateUser", method = RequestMethod.POST)
 	@ResponseBody
