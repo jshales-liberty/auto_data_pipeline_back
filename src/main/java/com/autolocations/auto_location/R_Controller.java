@@ -37,12 +37,14 @@ public class R_Controller {
 			return null;
 		}
 	}
+
 	@ApiOperation(value = "Get newest locations", notes = "Returns each vehicle's most recently reported location.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/updatelocations", method = RequestMethod.GET)
 	public List<Location> getLocs() throws URISyntaxException, SQLException {
 		return LocationDB.getCurrentLocations();
 	}
+
 	@ApiOperation(value = "Get historical data for a car.", notes = "Pass an id to get a list of all locations previously traveled by a vehicle for a given number of 'hops'. "
 			+ "Results are sorted from oldest to newest, with newest always being the present timestamp.")
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -57,6 +59,7 @@ public class R_Controller {
 			return LocationDB.getHistoricalDataByVID(vid);
 		}
 	}
+
 	@ApiOperation(value = "Add a driver/vehicle to the database.", notes = "Add a driver and vehicle to the database and they will begin appearing on the map.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/addDriver", method = RequestMethod.POST)
@@ -75,6 +78,7 @@ public class R_Controller {
 	public List<AppUser> getUsers() throws URISyntaxException, SQLException {
 		return UserDB.getUsers();
 	}
+
 	@ApiOperation(value = "Use this to adjust a driver/vehicle.", notes = "Pass a vehicle ID into this route with any characteristics you want to change about that ID.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driver/{vid}", method = RequestMethod.PUT)
@@ -88,6 +92,7 @@ public class R_Controller {
 		DriverDB.updateDriver(existing);
 		return DriverDB.getDriverInfo(vid);
 	}
+
 	@ApiOperation(value = "Add a new user.", notes = "Pass a user object to the route to add them to the database.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/addUser", method = RequestMethod.POST)
@@ -96,6 +101,7 @@ public class R_Controller {
 			throws URISyntaxException, SQLException {
 		return UserDB.adduser(u);
 	}
+
 	@ApiOperation(value = "Validate a user.", notes = "This route confirms a user has entered the correct username and password, "
 			+ "and if so logs them in allowing access to the rest of the site.")
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -105,6 +111,7 @@ public class R_Controller {
 			throws URISyntaxException, SQLException {
 		return UserDB.validateUser(u);
 	}
+
 	@ApiOperation(value = "Get driver/vehicle info by id.", notes = "Pass an id to get the first name, last name, vehicle year, make and model for the driver/vehicle.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driverinfo/{vid}", method = RequestMethod.GET)
@@ -114,6 +121,7 @@ public class R_Controller {
 		return DriverDB.getDriverInfo(vid);
 
 	}
+
 	@ApiOperation(value = "Get driver/vehicle info for all ids.", notes = "This returns the first name, last name, vehicle year, make and model for all drivers/vehicles.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driverinfo", method = RequestMethod.GET)
@@ -121,6 +129,7 @@ public class R_Controller {
 			throws URISyntaxException, SQLException {
 		return DriverDB.getDriverInfo();
 	}
+
 	@ApiOperation(value = "Delete a vehicle/driver by id.", notes = "Pass an id to remove the vehicle/driver from the database, and all of their historical locations.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driver/{vid}", method = RequestMethod.DELETE)
@@ -129,6 +138,7 @@ public class R_Controller {
 		DriverDB.deleteDriver(vid);
 		LocationDB.deleteVehLocations(vid);
 	}
+
 	@ApiOperation(value = "Average miles traveled per day", notes = "Given a time range, averages the miles per day traveled by all cars in the dataset. "
 			+ "By providing a vehicle ID, this will average the given car's miles per day for the range compared to the average per day for "
 			+ "the rest of the dataset.")
