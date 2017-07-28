@@ -104,7 +104,7 @@ public class R_Controller {
 			throws URISyntaxException, SQLException {
 		return UserDB.validateUser(u);
 	}
-
+	@ApiOperation(value = "Get driver/vehicle info by id.", notes = "Pass an id to get the first name, last name, vehicle year, make and model for the driver/vehicle.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driverinfo/{vid}", method = RequestMethod.GET)
 	public Driver getADriver(
@@ -113,14 +113,14 @@ public class R_Controller {
 		return DriverDB.getDriverInfo(vid);
 
 	}
-
+	@ApiOperation(value = "Get driver/vehicle info for all ids.", notes = "This returns the first name, last name, vehicle year, make and model for all drivers/vehicles.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driverinfo", method = RequestMethod.GET)
 	public List<Driver> getAllDrivers()
 			throws URISyntaxException, SQLException {
 		return DriverDB.getDriverInfo();
 	}
-
+	@ApiOperation(value = "Delete a vehicle/driver by id.", notes = "Pass an id to remove the vehicle/driver from the database, and all of their historical locations.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driver/{vid}", method = RequestMethod.DELETE)
 	public void delDriver(@PathVariable(name = "vid", required = true) int vid)
@@ -136,20 +136,17 @@ public class R_Controller {
 			@PathVariable(name = "vid", required = true) int vid,
 			@RequestBody Time t) throws URISyntaxException, SQLException {
 		List<Location> locations = LocationDB.getCumulativeDistancesForAll(t);
-		double[] result = new double[2];
 		Map<String, Double> map = new HashMap<String, Double>();
 		double total_distance = 0;
 		for (Location l : locations) {
 			if (l.getVid() == vid) {
-				result[0] = (l.getCumulativeDistance() / t.getDiff());
-				map.put("vid_avg", result[0]);
+				map.put("vid_avg", (l.getCumulativeDistance() / t.getDiff()));
 			} else {
 				total_distance += l.getCumulativeDistance();
 			}
 		}
 
-		result[1] = total_distance / (t.getDiff() * locations.size());
-		map.put("total_avg", result[1]);
+		map.put("total_avg", total_distance / (t.getDiff() * locations.size()));
 		return map;
 	}
 

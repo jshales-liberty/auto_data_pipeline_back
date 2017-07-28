@@ -22,7 +22,7 @@ public class AutoLocationApplication {
 	}
 	@Bean
 	public Docket swaggerSettings() {
-		ApiInfo api_updated = new ApiInfo("CLAPI", "David and Jonathan's Location API", "Version 1.0", null, null, null, null);
+		ApiInfo api_updated = new ApiInfo("CLAPI", "David and Jonathan's Current Location API", "Version 1.0", null, null, null, null);
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
 				.apis(RequestHandlerSelectors.any())
