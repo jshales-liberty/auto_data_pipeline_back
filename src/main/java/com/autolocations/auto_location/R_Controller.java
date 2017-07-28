@@ -37,13 +37,14 @@ public class R_Controller {
 			return null;
 		}
 	}
-
+	@ApiOperation(value = "Get newest locations", notes = "Returns each vehicle's most recently reported location.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/updatelocations", method = RequestMethod.GET)
 	public List<Location> getLocs() throws URISyntaxException, SQLException {
 		return LocationDB.getCurrentLocations();
 	}
-
+	@ApiOperation(value = "Get historical data for a car.", notes = "Pass an id to get a list of all locations previously traveled by a vehicle for a given number of 'hops'. "
+			+ "Results are sorted from oldest to newest, with newest always being the present timestamp.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/routehistory/{vid}/{hop_count}", method = RequestMethod.GET)
 	public List<Location> getHistLocs(
@@ -128,7 +129,9 @@ public class R_Controller {
 		DriverDB.deleteDriver(vid);
 		LocationDB.deleteVehLocations(vid);
 	}
-
+	@ApiOperation(value = "Average miles traveled per day", notes = "Given a time range, averages the miles per day traveled by all cars in the dataset. "
+			+ "By providing a vehicle ID, this will average the given car's miles per day for the range compared to the average per day for "
+			+ "the rest of the dataset.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/driver/routehistory/{vid}", method = RequestMethod.POST)
 	@ResponseBody
