@@ -71,7 +71,7 @@ public class Location {
 				+ Math.cos(lati * p) * Math.cos(this.getLati() * p)
 						* (1 - Math.cos((this.getLongi() - longi) * p)) / 2;
 
-		return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+		return 20506.21 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
 	}
 
 	public double getDistanceFromLast() {

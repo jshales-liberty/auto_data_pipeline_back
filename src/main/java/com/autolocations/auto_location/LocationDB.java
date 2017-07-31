@@ -15,7 +15,7 @@ public class LocationDB {
 	public static Connection getConnection()
 			throws URISyntaxException, SQLException {
 		String dbUrl = System.getenv("HEROKU_POSTGRESQL_BROWN_JDBC_URL");
-		if (dbUrl == null){
+		if (dbUrl == null) {
 			try {
 				Class.forName("org.postgresql.Driver");
 			} catch (ClassNotFoundException e) {
@@ -25,16 +25,6 @@ public class LocationDB {
 			dbUrl = "jdbc:postgres://wempudndjjzqhz:5fc6adad0072b1b33c3d0bbfea149b1d94341ca2f6aab2a3a616e10dcbd866bc@ec2-54-163-254-143.compute-1.amazonaws.com:5432/db9bi9pe38ip8j";
 		}
 		return DriverManager.getConnection(dbUrl);
-	}
-
-	public static int testpull() throws URISyntaxException, SQLException {
-		try (Connection conn = getConnection();
-				PreparedStatement pstmt_validate = conn.prepareStatement(
-						"Select count(*) from vehlocation");) {
-			ResultSet rs = pstmt_validate.executeQuery();
-			rs.next();
-			return rs.getInt("count");
-		}
 	}
 
 	public static List<Location> getCurrentLocations()
@@ -125,7 +115,7 @@ public class LocationDB {
 						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
 								+ "from vehlocation t1 where vid=? and timestamp < extract(epoch from now()) "
 								+ "ORDER BY timestamp ASC limit ?;");) {
-			pstmt.setLong(1, vid);
+			pstmt.setLong(1, vid); 
 			pstmt.setInt(2, hop_count);
 			ResultSet rs = pstmt.executeQuery();
 			double cumulative_distance = 0;
@@ -162,11 +152,13 @@ public class LocationDB {
 				PreparedStatement pstmt_1 = conn.prepareStatement(
 						"Insert into vehlocation_reserve (vid, lati, longi, status, timestamp) "
 								+ "select vid, lati, longi, status, timestamp from vehlocation where vid = ? and timestamp > extract(epoch from now());"
-								+ "Delete From vehlocation where vid = ?;"))
+								+ "Delete From vehlocation where vid = ?;"
+								))
 
 		{
 			pstmt_1.setInt(1, vid);
 			pstmt_1.setInt(2, vid);
+			pstmt_1.setInt(3, vid);
 			pstmt_1.executeUpdate();
 		}
 
