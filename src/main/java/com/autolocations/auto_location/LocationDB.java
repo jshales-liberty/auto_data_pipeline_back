@@ -115,7 +115,7 @@ public class LocationDB {
 						"Select t1.Lati, t1.Longi, t1.Status, t1.vid, t1.timestamp "
 								+ "from vehlocation t1 where vid=? and timestamp < extract(epoch from now()) "
 								+ "ORDER BY timestamp ASC limit ?;");) {
-			pstmt.setLong(1, vid);
+			pstmt.setLong(1, vid); 
 			pstmt.setInt(2, hop_count);
 			ResultSet rs = pstmt.executeQuery();
 			double cumulative_distance = 0;
