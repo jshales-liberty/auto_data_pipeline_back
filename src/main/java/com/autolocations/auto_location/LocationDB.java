@@ -152,11 +152,13 @@ public class LocationDB {
 				PreparedStatement pstmt_1 = conn.prepareStatement(
 						"Insert into vehlocation_reserve (vid, lati, longi, status, timestamp) "
 								+ "select vid, lati, longi, status, timestamp from vehlocation where vid = ? and timestamp > extract(epoch from now());"
-								+ "Delete From vehlocation where vid = ?;"))
+								+ "Delete From vehlocation where vid = ?;"
+								))
 
 		{
 			pstmt_1.setInt(1, vid);
 			pstmt_1.setInt(2, vid);
+			pstmt_1.setInt(3, vid);
 			pstmt_1.executeUpdate();
 		}
 
