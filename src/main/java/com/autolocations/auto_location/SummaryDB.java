@@ -61,7 +61,7 @@ public class SummaryDB {
 						+ "and timestamp >= ? and timestamp <= ? "
 						+ "GROUP BY 1 ORDER BY 1;");) {
 			pstmt.setLong(1, vid);
-			pstmt.setInt(2, timestampBegin);
+			pstmt.setInt(2, timestampBegin); 
 			pstmt.setInt(3, timestampEnd);
 			ResultSet rs = pstmt.executeQuery();
 			List<Summary> dowdata = new ArrayList<Summary>();
