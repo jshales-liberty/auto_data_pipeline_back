@@ -163,6 +163,8 @@ public class R_Controller {
 		return map;
 	}
 
+	@ApiOperation(value = "Sum of deliveries by Day of Week (DOW) for a given VID", 
+			notes = "Returns the total number of deliveries by day of the week for a given VID. If no VID is passed, the returned data is for all vehicles.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/sumbydow/{vid}", method = RequestMethod.POST)
 	@ResponseBody
@@ -176,6 +178,8 @@ public class R_Controller {
 		}
 	}
 
+	@ApiOperation(value = "Vehicles with the greatest number of incidents",
+			notes = "Returns the five vehicles with the greatest number of incidents during a given period of time.")
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/api/topfiveincidents/", method = RequestMethod.POST)
 	@ResponseBody
